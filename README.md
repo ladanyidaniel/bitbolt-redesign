@@ -8,8 +8,8 @@ Modernizált látványterv a [bitbolt.hu](https://www.bitbolt.hu/) számításte
 
 | Fájl | Mi ez |
 |---|---|
-| `index.html` | Az új főoldal: nyitórész kiemelt ajánlattal, szolgáltatások, kiemelt termékek, notebook akció, csoportosított kategóriák működő keresővel, adattörlő-kódos tájékoztató, elérhetőségek. Mobilon is működik. |
-| `admin.html` | A bolt tartalomkezelője (CMS): belépés, vezérlőpult, terméklista (keresés, szűrés, kiemelés és láthatóság kapcsolóval), termékszerkesztő képfeltöltéssel és élő előnézettel, a nyitóoldal fő ajánlata és a kiemeltek sorrendje, kategóriák, árlista, bolt adatai, nyitvatartás, rendkívüli közlemény. |
+| `index.html` | Az új főoldal: nyitórész kiemelt ajánlattal, szolgáltatások, kiemelt termékek, notebook akció, csoportosított kategóriák működő keresővel, **kosár** (darabszám és végösszeg a fejlécben, mennyiség módosítása) és **megrendelés** (adatok, átvétel, fizetés, visszaigazolás rendelésszámmal), adattörlő-kódos tájékoztató, elérhetőségek. Mobilon is működik. |
+| `admin.html` | A bolt tartalomkezelője (CMS): belépés, vezérlőpult, **rendelések** (státuszkezeléssel, élőben érkeznek), terméklista (keresés, szűrés, kiemelés és láthatóság kapcsolóval), termékszerkesztő képfeltöltéssel és élő előnézettel, a nyitóoldal fő ajánlata és a kiemeltek sorrendje, kategóriák, árlista, bolt adatai, nyitvatartás, rendkívüli közlemény. |
 | `data.js` | A közös adattár: a kezdő tartalom és a mentés. |
 | `assets/` | Ide kerülnek a bolt logói (lásd lent). |
 
@@ -17,7 +17,8 @@ Modernizált látványterv a [bitbolt.hu](https://www.bitbolt.hu/) számításte
 
 1. Nyisd meg az `admin.html`-t, és kattints a **Belépés** gombra (az adatok előre ki vannak töltve).
 2. Módosíts valamit: írd át egy termék árát, tölts fel képet, kapcsolj ki egy terméket, cseréld le a nyitóoldal fő ajánlatát, vagy írj be egy közleményt a *Bolt adatai* menüben.
-3. Nyisd meg mellette a weboldalt (*Weboldal megtekintése* gomb): a változás ott is megjelenik, ha nyitva van, akkor újratöltés nélkül is.
+3. A weboldalon tegyél termékeket a kosárba, és adj le egy próbarendelést: az adminban a *Rendelések* menüben azonnal megjelenik, a státusza ott állítható.
+4. Nyisd meg mellette a weboldalt (*Weboldal megtekintése* gomb): a változás ott is megjelenik, ha nyitva van, akkor újratöltés nélkül is.
 
 A módosítások **csak abban a böngészőben** mentődnek, ahol végezték őket (localStorage). Más látogatók mindig az eredeti tartalmat látják, és egymás változtatásait sem látják. A *Vezérlőpult → Alaphelyzet* gomb visszaállítja az eredeti tartalmat. Egy éles rendszerben ugyanez egy szerveren futó adatbázisba menne.
 

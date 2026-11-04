@@ -56,14 +56,15 @@
       shop: { addr: '9022 Győr, Móricz Zsigmond rakpart 22', tel: '96/316-538', fax: '96/335-318', email: 'info@bitbolt.hu',
         week: '9–18', sat: '9–13', msg: '', notice: true, sale: true },
       log: [],
-      list: 0
+      cart: [],
+      orders: []
     };
   }
 
   function load() {
     try {
       var raw = localStorage.getItem(KEY);
-      if (raw) { var d = JSON.parse(raw); if (d && d.products) return d; }
+      if (raw) { var d = JSON.parse(raw); if (d && d.products) { var def = defaults(); for (var k in def) if (d[k] == null) d[k] = def[k]; delete d.list; return d; } }
     } catch (e) {}
     return defaults();
   }
@@ -85,7 +86,34 @@
       api.data.log.unshift({ t: Date.now(), txt: txt });
       api.data.log = api.data.log.slice(0, 8);
     },
-    ft: function (n) { return Number(n || 0).toLocaleString('hu-HU').replace(/\s/g, '.') + ' Ft'; },
+    /* ---- kosár ---- */
+    product: function (pid) { return api.data.products.find(function (p) { return p.id === pid; }); },
+    cartItems: function () {
+      return api.data.cart.map(function (c) { var p = api.product(c.id); return p && p.visible ? { p: p, qty: c.qty } : null; }).filter(Boolean);
+    },
+    cartCount: function () { return api.cartItems().reduce(function (s, c) { return s + c.qty; }, 0); },
+    cartTotal: function () { return api.cartItems().reduce(function (s, c) { return s + c.qty * c.p.price; }, 0); },
+    cartAdd: function (pid) {
+      var c = api.data.cart.find(function (x) { return x.id === pid; });
+      if (c) c.qty = Math.min(99, c.qty + 1); else api.data.cart.push({ id: pid, qty: 1 });
+    },
+    cartSet: function (pid, qty) {
+      api.data.cart = api.data.cart.map(function (x) { return x.id === pid ? { id: pid, qty: Math.max(0, Math.min(99, qty)) } : x; })
+        .filter(function (x) { return x.qty > 0; });
+    },
+    placeOrder: function (info) {
+      var items = api.cartItems().map(function (c) { return { id: c.p.id, name: c.p.name, price: c.p.price, qty: c.qty }; });
+      var no = 'BB-' + (1001 + api.data.orders.length);
+      var o = { no: no, t: Date.now(), items: items, total: api.cartTotal() + (info.ship === 'Házhozszállítás' ? api.SHIP_FEE : 0),
+        info: info, status: 'Új' };
+      api.data.orders.unshift(o);
+      api.data.cart = [];
+      api.logAdd('Új rendelés: ' + no + ' – ' + info.name);
+      return o;
+    },
+    SHIP_FEE: 2490,
+    STATUSES: ['Új', 'Feldolgozás alatt', 'Átvehető', 'Kiszállítva', 'Teljesítve', 'Lemondva'],
+    ft: function (n) { return String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' Ft'; },
     esc: function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); },
     icons: {
       cart: 'M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2M10 21h.01M17 21h.01',

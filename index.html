@@ -117,7 +117,65 @@ footer{background:var(--red);color:#fff;position:relative;overflow:hidden}
 .fcard .eyebrow{font-size:12px;letter-spacing:.08em;color:var(--red-d)}
 .fcard b{font-size:17px}
 
-#toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(140px);background:var(--ink);color:#fff;padding:14px 20px;border-radius:999px;font-weight:600;font-size:14px;transition:transform .25s ease;z-index:50;max-width:calc(100vw - 32px)}
+[hidden]{display:none!important}
+/* cart button */
+.cartbtn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:6px 18px 6px 14px;border:1px solid #E2E2E2;border-radius:999px;background:#fff;text-align:left}
+.cartbtn:hover{border-color:var(--ink)}
+.cartbtn .t{display:flex;flex-direction:column;line-height:1.15}
+.cartbtn .t b{font-size:14px;display:inline-flex;gap:6px;align-items:center}
+.cartbtn .t span.sum{font:700 12px var(--mono);color:var(--red-d)}
+.cartbtn.bump{animation:bump .35s ease}
+@keyframes bump{40%{transform:scale(1.08)}}
+/* drawer */
+.overlay{position:fixed;inset:0;background:rgba(17,17,17,.45);z-index:60}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100vw);background:#fff;z-index:61;display:flex;flex-direction:column;box-shadow:-20px 0 60px -20px rgba(0,0,0,.35)}
+.drawer .hd{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;border-bottom:1px solid var(--line)}
+.drawer .hd h2{margin:0;font-family:var(--display);font-size:26px;font-weight:900}
+.xbtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;display:inline-flex;align-items:center;justify-content:center}
+.xbtn:hover{border-color:var(--ink)}
+.drawer .items{flex:1;overflow-y:auto;padding:8px 24px}
+.citem{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);align-items:center}
+.citem .th{width:60px;height:60px;border-radius:12px;background:#F4F4F5;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;overflow:hidden}
+.citem .th img{width:100%;height:100%;object-fit:contain;background:#fff}
+.qty{display:inline-flex;align-items:center;border:1px solid #E4E4E7;border-radius:999px}
+.qty button{width:34px;height:34px;border:0;background:transparent;border-radius:50%;font-size:18px;font-weight:700}
+.qty button:hover{background:#F4F4F5}
+.qty span{min-width:26px;text-align:center;font:700 14px var(--mono)}
+.rm{border:0;background:none;color:var(--muted2);font-size:13px;text-decoration:underline;padding:4px}
+.rm:hover{color:var(--red-d)}
+.drawer .ft{border-top:1px solid var(--line);padding:20px 24px;display:flex;flex-direction:column;gap:14px;background:#FAFAFA}
+.sumrow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:15px}
+.sumrow.total{font-size:17px;font-weight:700}
+.sumrow.total b{font-family:var(--display);font-size:30px;font-weight:900;letter-spacing:-.02em}
+.btn.red{background:var(--red);border-color:var(--red);color:#fff;width:100%}
+.btn.red:hover{background:var(--red-d);border-color:var(--red-d)}
+.btn.red[disabled]{opacity:.4;cursor:not-allowed}
+/* checkout */
+.checkout{position:fixed;inset:0;background:var(--bg);z-index:70;overflow-y:auto}
+.checkout .top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:2}
+.checkout .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.co{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start;padding-block:32px 64px}
+.co .form{flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:18px}
+.co .side{flex:1 1 340px;min-width:0;position:sticky;top:96px}
+.box{background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:16px}
+.box h3{margin:0;font-family:var(--display);font-size:20px;font-weight:800;display:flex;gap:12px;align-items:center}
+.box h3 .n{width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font:700 13px var(--mono);display:inline-flex;align-items:center;justify-content:center}
+.frow{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr))}
+.fld{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fld label{font-size:13px;font-weight:700}
+.inp{min-height:48px;padding:0 14px;border:1px solid #D4D4D8;border-radius:12px;background:#fff;font-size:15px;width:100%;min-width:0}
+textarea.inp{padding:12px 14px;min-height:90px;resize:vertical}
+.inp:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(17,17,17,.08)}
+.opt{display:flex;gap:14px;align-items:flex-start;padding:16px;border:2px solid #E4E4E7;border-radius:16px;cursor:pointer;background:#fff}
+.opt:hover{border-color:#A1A1AA}
+.opt:has(input:checked){border-color:var(--red);background:#FFF8F8}
+.opt input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--red);flex:0 0 auto}
+.opt .r{margin-left:auto;font-weight:700;white-space:nowrap}
+.chk{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.5;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--red);margin:1px 0 0;flex:0 0 auto}
+.success{max-width:640px;margin:0 auto;padding:72px 16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px}
+.success .ok{width:88px;height:88px;border-radius:50%;background:var(--red);display:inline-flex;align-items:center;justify-content:center}
+#toast{position:fixed;left:50%;bottom:28px;z-index:80;transform:translateX(-50%) translateY(140px);background:var(--ink);color:#fff;padding:14px 20px;border-radius:999px;font-weight:600;font-size:14px;transition:transform .25s ease;z-index:50;max-width:calc(100vw - 32px)}
 #toast.on{transform:translateX(-50%) translateY(0)}
 @media (max-width:760px){.hide-m{display:none!important} header{position:static} .panel{padding:26px;min-height:0}}
 </style>
@@ -153,8 +211,9 @@ footer{background:var(--red);color:#fff;position:relative;overflow:hidden}
     <a href="http://www.budapestbank.hu/szolgaltatas/lakossag/hitel-aruhitel.php" target="_blank" rel="noopener">Áruhitel</a>
   </nav>
   <div style="display:flex;gap:10px;align-items:center">
-    <a href="#lista" id="listBtn" class="pillbtn" style="border:1px solid #E2E2E2" aria-label="Lista">
-      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg>Lista <span class="badge" id="listCount">0</span></a>
+    <button type="button" id="cartBtn" class="cartbtn" aria-haspopup="dialog" aria-controls="drawer">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2M10 21h.01M17 21h.01"/></svg>
+      <span class="t"><b>Kosár <span class="badge" id="cartCount">0</span></b><span class="sum" id="cartSum">0 Ft</span></span></button>
     <a href="#ajanlatok" class="pillbtn" style="background:var(--red);color:#fff;padding:0 22px">Webáruház
       <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div>
@@ -267,6 +326,22 @@ footer{background:var(--red);color:#fff;position:relative;overflow:hidden}
   </div>
 </footer>
 
+<div class="overlay" id="ovl" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+  <div class="hd"><h2 id="drawerTitle">Kosár</h2><button type="button" class="xbtn" data-close-cart aria-label="Kosár bezárása"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="items" id="cartItems"></div>
+  <div class="ft" id="cartFoot"></div>
+</aside>
+
+<div class="checkout" id="checkout" role="dialog" aria-modal="true" aria-labelledby="coTitle" hidden>
+  <div class="top"><div class="wrap">
+    <button type="button" class="btn line" id="coBack" style="min-height:44px;padding:0 18px;font-size:14px"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Vissza<span class="hide-m">&nbsp;a kosárhoz</span></button>
+    <h2 id="coTitle" style="margin:0;font-family:var(--display);font-size:24px;font-weight:900">Megrendelés</h2>
+    <span class="hide-m mono" style="font-size:12px;color:var(--muted2)">Biztonságos rendelés · bemutató</span>
+  </div></div>
+  <div id="coBody"></div>
+</div>
+
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script src="data.js"></script>
@@ -289,7 +364,7 @@ footer{background:var(--red);color:#fff;position:relative;overflow:hidden}
       (p.img?'<img src="'+E(p.img)+'" alt="">':'')+
       '<span class="cat">'+E(p.cat)+'</span><span class="gar">Garancia '+E(p.gar)+'</span>'+(p.sale?'<span class="sale">AKCIÓ</span>':'')+
       '</div><div class="body"><h3>'+E(p.name)+'</h3>'+(p.spec?'<p>'+E(p.spec)+'</p>':'')+
-      '<div class="foot"><span class="price">'+ft(p.price)+'</span><button type="button" class="addbtn" data-add="'+p.id+'" aria-label="Listára: '+E(p.name)+'">'+plus+'</button></div></div></article>';
+      '<div class="foot"><span class="price">'+ft(p.price)+'</span><button type="button" class="addbtn" data-add="'+p.id+'" aria-label="Kosárba: '+E(p.name)+'">'+plus+'</button></div></div></article>';
   }
 
   function render(){
@@ -301,7 +376,8 @@ footer{background:var(--red);color:#fff;position:relative;overflow:hidden}
     document.querySelectorAll('[data-mail]').forEach(function(el){ el.href = 'mailto:' + s.email; });
     $('ann').hidden = !s.msg; $('ann').textContent = s.msg || '';
     $('notice').hidden = !s.notice;
-    $('listCount').textContent = D.list || 0;
+    renderCartBtn();
+    if (!$('drawer').hidden) renderCart();
 
     // hero
     var h = D.products.find(function(p){ return p.id === D.heroId && p.visible; }) || vis[0];
@@ -312,7 +388,7 @@ footer{background:var(--red);color:#fff;position:relative;overflow:hidden}
       (h.img?'<img class="pimg" src="'+E(h.img)+'" alt="">':'')+
       '<div style="display:flex;flex-direction:column;gap:10px"><span style="font-size:14px;font-weight:600;opacity:.85">'+E(h.cat)+'</span><h2>'+E(h.name)+'</h2>'+(h.spec?'<span class="mono" style="font-size:13px;opacity:.85">'+E(h.spec)+'</span>':'')+'</div>'+
       '<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap"><div class="big">'+ft(h.price).replace(' Ft','')+'<span style="font-size:24px;font-weight:700"> Ft</span></div>'+
-      '<button type="button" data-add="'+h.id+'" style="min-height:52px;padding:0 24px;border:0;border-radius:999px;background:#111;color:#fff;font-weight:700;font-size:15px">Listára +</button></div>';
+      '<button type="button" data-add="'+h.id+'" style="min-height:52px;padding:0 24px;border:0;border-radius:999px;background:#111;color:#fff;font-weight:700;font-size:15px">Kosárba +</button></div>';
 
     // services
     $('services').innerHTML = SERVICES.map(function(x){
@@ -335,12 +411,12 @@ footer{background:var(--red);color:#fff;position:relative;overflow:hidden}
       return '<article class="nbcard card-hover">'+(n.img?'<img src="'+E(n.img)+'" alt="">':'')+
         '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="mono" style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:'+col+'">'+E(n.state)+'</span><span style="font-size:12px;color:#8E8E96">'+E(screen)+'</span></div>'+
         '<h3>'+E(n.name)+'</h3><div class="chips">'+parts.map(function(c){ return '<span>'+E(c)+'</span>'; }).join('')+'</div>'+
-        '<div class="foot"><span class="price">'+ft(n.price)+'</span><button type="button" class="listbtn" data-add="'+n.id+'">Listára</button></div></article>';
+        '<div class="foot"><span class="price">'+ft(n.price)+'</span><button type="button" class="listbtn" data-add="'+n.id+'">Kosárba</button></div></article>';
     }).join('');
     $('extraSale').innerHTML = other.map(function(o){
       return '<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;background:#1C1C1F;border:1px solid #2A2A2E;border-radius:20px;padding:22px 26px">'+
         '<div style="display:flex;align-items:center;gap:16px">'+ic(BB.catIcon(o.cat),34,'#FF4D52',1.8)+'<div><div style="font-weight:700;font-size:17px">'+E(o.name)+'</div><div style="font-size:14px;color:#A1A1AA">'+E(o.spec||o.cat)+'</div></div></div>'+
-        '<div style="display:flex;align-items:center;gap:16px"><span class="price" style="font-size:30px">'+ft(o.price)+'</span><button type="button" class="listbtn" data-add="'+o.id+'">Listára</button></div></div>';
+        '<div style="display:flex;align-items:center;gap:16px"><span class="price" style="font-size:30px">'+ft(o.price)+'</span><button type="button" class="listbtn" data-add="'+o.id+'">Kosárba</button></div></div>';
     }).join('');
 
     // groups
@@ -354,7 +430,7 @@ footer{background:var(--red);color:#fff;position:relative;overflow:hidden}
     $('moreSec').hidden = !more.length;
     $('more').innerHTML = more.map(function(m){
       return '<div><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span class="mono" style="font-size:11px;color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.06em">'+E(m.cat)+' · '+E(m.gar)+'</span><span style="font-size:15px;font-weight:600">'+E(m.name)+'</span></div>'+
-        '<span style="display:flex;align-items:center;gap:12px"><span style="font-family:var(--display);font-size:20px;font-weight:800;white-space:nowrap">'+ft(m.price)+'</span><button type="button" class="addbtn" style="width:36px;height:36px" data-add="'+m.id+'" aria-label="Listára: '+E(m.name)+'">'+plus+'</button></span></div>';
+        '<span style="display:flex;align-items:center;gap:12px"><span style="font-family:var(--display);font-size:20px;font-weight:800;white-space:nowrap">'+ft(m.price)+'</span><button type="button" class="addbtn" style="width:36px;height:36px" data-add="'+m.id+'" aria-label="Kosárba: '+E(m.name)+'">'+plus+'</button></span></div>';
     }).join('');
 
     if (lastQuery) search(lastQuery, lastChip);
@@ -387,15 +463,132 @@ footer{background:var(--red);color:#fff;position:relative;overflow:hidden}
 
   document.addEventListener('click', function(e){
     var a = e.target.closest('[data-add]');
-    if (a) { var p = BB.data.products.find(function(x){ return x.id === +a.dataset.add; }); BB.data.list = (BB.data.list||0)+1; BB.save(); $('listCount').textContent = BB.data.list; toast('Listára téve: ' + (p ? p.name : '')); return; }
+    if (a) { var p = BB.product(+a.dataset.add); BB.cartAdd(+a.dataset.add); BB.save(); renderCartBtn(true); toast('Kosárba téve: ' + (p ? p.name : '')); return; }
+    if (e.target.closest('#cartBtn')) { openCart(); return; }
+    if (e.target.closest('[data-close-cart]') || e.target.id === 'ovl') { closeCart(); return; }
+    var q = e.target.closest('[data-qty]');
+    if (q) { var c = BB.data.cart.find(function(x){ return x.id === +q.dataset.id; }); BB.cartSet(+q.dataset.id, (c?c.qty:0) + (+q.dataset.qty)); BB.save(); renderCart(); renderCartBtn(); return; }
+    var r = e.target.closest('[data-rm]');
+    if (r) { BB.cartSet(+r.dataset.rm, 0); BB.save(); renderCart(); renderCartBtn(); return; }
+    if (e.target.closest('#toCheckout')) { openCheckout(); return; }
+    if (e.target.closest('#coBack')) { closeCheckout(); openCart(); return; }
+    if (e.target.closest('#coHome')) { closeCheckout(); window.scrollTo(0,0); return; }
     var c = e.target.closest('[data-chip]');
     if (c) { if (lastChip && lastQuery === c.dataset.chip) { search('', false); } else { search(c.dataset.chip, true); $('results').scrollIntoView({block:'nearest'}); } return; }
     if (e.target.closest('#clearRes')) { $('q').value=''; search('', false); return; }
-    if (e.target.closest('#listBtn')) { e.preventDefault(); toast('A listán ' + (BB.data.list||0) + ' termék van (bemutató)'); }
   });
 
   // live update when the admin (another tab) saves
-  window.addEventListener('storage', function(e){ if (e.key === BB.KEY) { BB.reload(); render(); toast('Az oldal frissült az admin módosításai alapján'); } });
+  function sig(){ var d = BB.data; return JSON.stringify([d.products, d.heroId, d.heroLabel, d.groups, d.shop]); }
+  var lastSig = sig();
+  window.addEventListener('storage', function(e){
+    if (e.key !== BB.KEY) return;
+    BB.reload(); var n = sig(); var changed = n !== lastSig; lastSig = n;
+    if ($('checkout').hidden) render(); else renderCartBtn();
+    if (changed) toast('Az oldal frissült az admin módosításai alapján');
+  });
+  /* ---------- kosár ---------- */
+  var lastFocus = null;
+  function renderCartBtn(bump){
+    $('cartCount').textContent = BB.cartCount();
+    $('cartSum').textContent = ft(BB.cartTotal());
+    $('cartBtn').setAttribute('aria-label', 'Kosár: ' + BB.cartCount() + ' termék, ' + ft(BB.cartTotal()));
+    if (bump) { var b = $('cartBtn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); }
+  }
+  function thumb(p){ return p.img ? '<img src="'+E(p.img)+'" alt="">' : ic(BB.catIcon(p.cat),26,'#111',1.6); }
+  function renderCart(){
+    var items = BB.cartItems();
+    $('drawerTitle').textContent = 'Kosár (' + BB.cartCount() + ')';
+    $('cartItems').innerHTML = items.length ? items.map(function(c){
+      return '<div class="citem"><span class="th">'+thumb(c.p)+'</span><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">'+
+        '<div style="font-weight:600;font-size:14px;line-height:1.35">'+E(c.p.name)+'</div>'+
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">'+
+          '<span class="qty"><button type="button" data-qty="-1" data-id="'+c.p.id+'" aria-label="Eggyel kevesebb">−</button><span aria-label="Mennyiség">'+c.qty+'</span><button type="button" data-qty="1" data-id="'+c.p.id+'" aria-label="Eggyel több">+</button></span>'+
+          '<span style="font-family:var(--display);font-weight:800;font-size:17px;white-space:nowrap">'+ft(c.qty*c.p.price)+'</span></div>'+
+        '<button type="button" class="rm" data-rm="'+c.p.id+'" style="align-self:flex-start">Eltávolítás</button></div></div>';
+    }).join('') : '<div style="padding:48px 8px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;color:var(--muted)">'+ic('cart',44,'#D4D4D8',1.6)+'<b style="color:var(--ink);font-size:17px">A kosár üres</b><span>Tegyen bele valamit a kiemelt ajánlatok közül!</span><button type="button" class="btn line" data-close-cart style="min-height:46px">Vásárlás folytatása</button></div>';
+    $('cartFoot').hidden = !items.length;
+    $('cartFoot').innerHTML = '<div class="sumrow"><span>Részösszeg ('+BB.cartCount()+' db)</span><span style="font-weight:700">'+ft(BB.cartTotal())+'</span></div>'+
+      '<div class="sumrow total"><span>Összesen</span><b>'+ft(BB.cartTotal())+'</b></div>'+
+      '<span style="font-size:12px;color:var(--muted2);margin-top:-8px">Az árak bruttó árak. Szállítási díj a következő lépésben.</span>'+
+      '<button type="button" class="btn red" id="toCheckout">Tovább a megrendeléshez →</button>'+
+      '<button type="button" class="btn line" data-close-cart style="min-height:46px;font-size:14px">Vásárlás folytatása</button>';
+  }
+  function openCart(){ lastFocus = document.activeElement; renderCart(); $('ovl').hidden = false; $('drawer').hidden = false; document.body.style.overflow='hidden'; $('drawer').querySelector('.xbtn').focus(); }
+  function closeCart(){ $('ovl').hidden = true; $('drawer').hidden = true; document.body.style.overflow=''; if (lastFocus) lastFocus.focus(); }
+  document.addEventListener('keydown', function(e){ if (e.key !== 'Escape') return; if (!$('checkout').hidden) { closeCheckout(); openCart(); } else if (!$('drawer').hidden) closeCart(); });
+
+  /* ---------- megrendelés ---------- */
+  function openCheckout(){
+    $('ovl').hidden = true; $('drawer').hidden = true;
+    $('checkout').hidden = false; document.body.style.overflow='hidden'; $('checkout').scrollTop = 0;
+    var s = BB.data.shop;
+    $('coBody').innerHTML = '<form class="wrap co" id="coForm" novalidate>'+
+      '<div class="form">'+
+        '<div class="box"><h3><span class="n">1</span>Kapcsolattartó</h3>'+
+          '<div class="fld"><label for="c-name">Teljes név *</label><input class="inp" id="c-name" required autocomplete="name"></div>'+
+          '<div class="frow"><div class="fld"><label for="c-mail">E-mail cím *</label><input class="inp" id="c-mail" type="email" required autocomplete="email"></div>'+
+          '<div class="fld"><label for="c-tel">Telefonszám *</label><input class="inp" id="c-tel" type="tel" required autocomplete="tel" placeholder="+36 30 123 4567"></div></div></div>'+
+        '<div class="box"><h3><span class="n">2</span>Átvétel</h3>'+
+          '<label class="opt"><input type="radio" name="ship" value="Személyes átvétel" checked><span><b>Személyes átvétel az üzletben</b><br><span style="font-size:13px;color:var(--muted)">'+E(s.addr)+' · H–P '+E(s.week)+', Szo '+E(s.sat)+'</span></span><span class="r">Ingyenes</span></label>'+
+          '<label class="opt"><input type="radio" name="ship" value="Házhozszállítás"><span><b>Házhozszállítás futárral</b><br><span style="font-size:13px;color:var(--muted)">1–3 munkanap</span></span><span class="r">'+ft(BB.SHIP_FEE)+'</span></label>'+
+          '<div id="addrBox" hidden style="display:flex;flex-direction:column;gap:14px">'+
+            '<div class="frow"><div class="fld"><label for="c-zip">Irányítószám *</label><input class="inp" id="c-zip" inputmode="numeric" autocomplete="postal-code"></div>'+
+            '<div class="fld"><label for="c-city">Település *</label><input class="inp" id="c-city" autocomplete="address-level2"></div></div>'+
+            '<div class="fld"><label for="c-street">Utca, házszám *</label><input class="inp" id="c-street" autocomplete="street-address"></div></div></div>'+
+        '<div class="box"><h3><span class="n">3</span>Fizetés</h3>'+
+          '<label class="opt"><input type="radio" name="pay" value="Fizetés átvételkor" checked><span><b>Fizetés átvételkor</b><br><span style="font-size:13px;color:var(--muted)">Készpénz vagy bankkártya</span></span></label>'+
+          '<label class="opt"><input type="radio" name="pay" value="Banki átutalás"><span><b>Banki átutalás</b><br><span style="font-size:13px;color:var(--muted)">A díjbekérőt e-mailben küldjük</span></span></label>'+
+          '<label class="opt"><input type="radio" name="pay" value="Áruhitel"><span><b>Áruhitel</b><br><span style="font-size:13px;color:var(--muted)">Az ügyintézés az üzletben történik</span></span></label>'+
+          '<div class="fld"><label for="c-note">Megjegyzés a rendeléshez</label><textarea class="inp" id="c-note" placeholder="pl. telefonáljanak, mielőtt elindul a futár"></textarea></div></div>'+
+      '</div>'+
+      '<div class="side"><div class="box"><h3>Összesítő</h3><div id="coSum"></div>'+
+        '<label class="chk"><input type="checkbox" id="c-aszf" required><span>Elfogadom az <a href="#" style="text-decoration:underline">Általános Szerződési Feltételeket</a> és az <a href="#" style="text-decoration:underline">Adatkezelési tájékoztatót</a>. *</span></label>'+
+        '<p id="coErr" role="alert" style="margin:0;color:var(--red-d);font-size:14px;font-weight:600" hidden></p>'+
+        '<button type="submit" class="btn red">Megrendelés elküldése</button>'+
+        '<span style="font-size:12px;color:var(--muted2);text-align:center">Bemutató: valódi rendelés és fizetés nem történik.</span></div></div>'+
+    '</form>';
+    var f = $('coForm');
+    var upd = function(){
+      var home = f.querySelector('input[name=ship]:checked').value === 'Házhozszállítás';
+      $('addrBox').hidden = !home; ['c-zip','c-city','c-street'].forEach(function(i){ $(i).required = home; });
+      var fee = home ? BB.SHIP_FEE : 0;
+      $('coSum').innerHTML = BB.cartItems().map(function(c){
+        return '<div class="sumrow" style="padding:8px 0;border-bottom:1px solid var(--line);font-size:14px"><span style="min-width:0">'+c.qty+' × '+E(c.p.name)+'</span><span style="white-space:nowrap;font-weight:600">'+ft(c.qty*c.p.price)+'</span></div>';
+      }).join('')+
+      '<div class="sumrow" style="padding-top:12px"><span>Részösszeg</span><span>'+ft(BB.cartTotal())+'</span></div>'+
+      '<div class="sumrow"><span>Szállítás</span><span>'+(fee?ft(fee):'Ingyenes')+'</span></div>'+
+      '<div class="sumrow total" style="padding-top:8px;border-top:2px solid var(--ink);margin-top:6px"><span>Fizetendő</span><b>'+ft(BB.cartTotal()+fee)+'</b></div>';
+    };
+    f.addEventListener('change', upd); upd();
+    f.addEventListener('input', function(e){ var i = e.target; if (i.classList.contains('inp') && i.checkValidity()) { i.style.borderColor = ''; i.removeAttribute('aria-invalid'); }
+      if (![].slice.call(f.querySelectorAll('[aria-invalid]')).length) $('coErr').hidden = true; });
+    $('c-aszf').addEventListener('change', function(){ if (this.checked && !f.querySelector('[aria-invalid]')) $('coErr').hidden = true; });
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      var bad = [].slice.call(f.querySelectorAll('[required]')).filter(function(i){ return !i.checkValidity(); });
+      f.querySelectorAll('.inp').forEach(function(i){ i.style.borderColor = ''; i.removeAttribute('aria-invalid'); });
+      bad.forEach(function(i){ if (i.classList.contains('inp')) { i.style.borderColor = '#D7141A'; i.setAttribute('aria-invalid','true'); } });
+      if (bad.length) { $('coErr').hidden = false; $('coErr').textContent = bad[0].id === 'c-aszf' ? 'Kérjük, fogadja el a feltételeket.' : 'Kérjük, töltse ki a pirossal jelölt mezőket.'; bad[0].focus(); return; }
+      var v = function(i){ return $(i).value.trim(); };
+      var ship = f.querySelector('input[name=ship]:checked').value;
+      var o = BB.placeOrder({ name: v('c-name'), email: v('c-mail'), tel: v('c-tel'), ship: ship, pay: f.querySelector('input[name=pay]:checked').value,
+        addr: ship === 'Házhozszállítás' ? (v('c-zip') + ' ' + v('c-city') + ', ' + v('c-street')) : '', note: v('c-note') });
+      BB.save(); renderCartBtn();
+      $('coTitle').textContent = 'Köszönjük!'; $('coBack').hidden = true;
+      $('coBody').innerHTML = '<div class="success"><span class="ok">'+'<svg aria-hidden="true" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>'+
+        '<h2 class="h2">Megrendelését rögzítettük!</h2>'+
+        '<div class="mono" style="font-size:15px;font-weight:700;background:#fff;border:1px solid var(--line);padding:10px 16px;border-radius:12px">Rendelésszám: '+E(o.no)+'</div>'+
+        '<p style="margin:0;font-size:17px;line-height:1.55;color:var(--muted)">Visszaigazolást küldünk a(z) <b style="color:var(--ink)">'+E(o.info.email)+'</b> címre. '+(o.info.ship==='Személyes átvétel'?'Amint a termékek átvehetők, értesítjük – üzletünkben várjuk!':'A csomag feladásakor értesítjük.')+'</p>'+
+        '<p style="margin:0;font-size:14px;color:var(--muted2)">Fizetendő: <b>'+ft(o.total)+'</b> · '+E(o.info.pay)+'</p>'+
+        '<div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center"><button type="button" class="btn dark" id="coHome">Vissza a főoldalra</button><a class="btn line" href="admin.html">Megnézem az adminban →</a></div>'+
+        '<p style="margin:0;font-size:12px;color:var(--muted2)">Bemutató: a rendelés csak ebben a böngészőben jött létre, az admin felület Rendelések menüjében látható.</p></div>';
+      $('checkout').scrollTop = 0;
+    });
+    $('c-name').focus();
+  }
+  function closeCheckout(){ $('checkout').hidden = true; $('coTitle').textContent = 'Megrendelés'; $('coBack').hidden = false; document.body.style.overflow=''; }
+
   window.addEventListener('pageshow', function(){ BB.reload(); render(); });
   render();
 })();
