@@ -240,6 +240,9 @@ const P = {
   mouse:'M12 3a6 6 0 0 1 6 6v6a6 6 0 0 1-12 0V9a6 6 0 0 1 6-6zM12 7v4',
   laptop:'M4 5h16v11H4zM2 19h20',
   key:'M15 7a4 4 0 1 1-3.9 5H8v3H5v-3H3v-3h8.1A4 4 0 0 1 15 7z',
+  printer:'M6 9V3h12v6M6 18H4v-7h16v7h-2M7 14h10v7H7z',
+  cable:'M7 3v5M17 3v5M5 8h4v4a2 2 0 0 1-4 0zM15 8h4v4a2 2 0 0 1-4 0zM7 14v3a4 4 0 0 0 4 4h2a4 4 0 0 0 4-4v-3',
+  db:'M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3',
   ram:'M3 7h18v9H3zM7 16v3M11 16v3M15 16v3M19 16v3M7 10v3M11 10v3M15 10v3'
 };
 const ic = (n, s=18, stroke='currentColor', w=2) => `<svg aria-hidden="true" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"><path d="${P[n]}"/></svg>`;
@@ -396,7 +399,7 @@ function vEdit(v){
           <div class="field"><label for="f-state">Állapot</label><select class="input" id="f-state">${['Új','Felújított','Használt'].map(c=>`<option${c===p.state?' selected':''}>${c}</option>`).join('')}</select></div>
         </div>
         <div class="row">
-          <div class="field"><label for="f-price">Bruttó ár (Ft)</label><input class="input mono" id="f-price" type="number" min="0" step="100" value="${p.price||''}" placeholder="0"></div>
+          <div class="field"><label for="f-price">Bruttó ár (Ft)</label><input class="input mono" id="f-price" type="number" min="0" step="1" value="${p.price||''}" placeholder="0"></div>
           <div class="field"><label for="f-gar">Garancia</label><input class="input" id="f-gar" value="${esc(p.gar)}" placeholder="pl. 3 év"></div>
         </div>
         <div class="field"><label for="f-spec">Rövid műszaki leírás</label><textarea class="input" id="f-spec" placeholder="pl. PCIe · 8 GB">${esc(p.spec)}</textarea><span class="hint">Ez jelenik meg a termékkártyán, a név alatt.</span></div>
@@ -494,17 +497,44 @@ function vHome(v){
 
 function vCats(v){
   setHead('Admin / Kategóriák','Kategóriák', viewSite + `<button class="btn primary sm" type="button" id="addGroup">${ic('plus',16,'#fff',2.6)}Új csoport</button>`);
+  const ICONS=[['cpu','Alkatrész'],['ssd','Tároló'],['mouse','Periféria'],['wifi','Hálózat'],['printer','Nyomtatás'],['laptop','Notebook'],['cable','Kábel'],['db','Egyéb'],['box','Doboz']];
+  const n=S.groups.length;
   v.innerHTML = `
-  <p class="muted" style="margin:0;font-size:15px;max-width:720px;line-height:1.55">A régi oldalon a több mint 60 kategória egy hosszú listában szerepel. Itt témacsoportokba rendezhetők, így a látogató gyorsabban megtalálja, amit keres.</p>
-  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">${S.groups.map((g,gi)=>`
-    <div class="card" style="display:flex;flex-direction:column;gap:14px">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3>${esc(g.title)}</h3><span class="pill">${g.items.length} kategória</span></div>
-      <div class="chips">${g.items.map((c,ci)=>`<span class="chip">${esc(c)}<button type="button" data-rmc="${gi}:${ci}" aria-label="${esc(c)} törlése">${ic('trash',12)}</button></span>`).join('')}</div>
-      <form data-addc="${gi}" style="display:flex;gap:8px"><label class="sr" for="nc${gi}">Új kategória ide: ${esc(g.title)}</label><input id="nc${gi}" class="input" placeholder="Új kategória…" style="min-height:40px"><button class="btn sm" type="submit">${ic('plus',14)}</button></form>
+  <p class="muted" style="margin:0;font-size:15px;max-width:760px;line-height:1.55">A régi oldalon a több mint 60 kategória egy hosszú listában szerepel. Itt témacsoportokba rendezhetők: a csoport neve átírható, a sorrend a nyilakkal állítható, a kategóriák a ceruzával nevezhetők át és rendezhetők. Minden változás azonnal megjelenik a weboldalon.</p>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr))">${S.groups.map((g,gi)=>`
+    <div class="card" style="display:flex;flex-direction:column;gap:14px" id="grp${gi}">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="mono" style="font-size:12px;font-weight:700;color:var(--red);width:22px">${String(gi+1).padStart(2,'0')}</span>
+        <label class="sr" for="gt${gi}">Csoport neve</label>
+        <input id="gt${gi}" class="input" data-gtitle="${gi}" value="${esc(g.title)}" style="min-height:42px;font-family:var(--display);font-weight:800;font-size:17px;flex:1">
+        <button class="icon-btn" type="button" data-gmv="${gi}:-1" aria-label="Csoport feljebb" ${gi===0?'disabled style="opacity:.35"':''}>${ic('up',16)}</button>
+        <button class="icon-btn" type="button" data-gmv="${gi}:1" aria-label="Csoport lejjebb" ${gi===n-1?'disabled style="opacity:.35"':''}>${ic('down',16)}</button>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <label for="gi${gi}" style="font-size:13px;font-weight:700">Ikon</label>
+        <select id="gi${gi}" class="sel" data-gicon="${gi}" style="min-height:38px;font-size:13px">${ICONS.map(([k,l])=>`<option value="${k}"${(g.icon||'box')===k?' selected':''}>${l}</option>`).join('')}</select>
+        <span class="thumb" style="width:38px;height:38px;background:var(--red-l)">${ic(g.icon||'box',18,'#D7141A')}</span>
+        <span class="pill" style="margin-left:auto">${g.items.length} kategória</span>
+      </div>
+      <div class="chips">${g.items.map((c,ci)=> S.editChip===gi+':'+ci ? `
+        <form class="chip" data-chipform="${gi}:${ci}" style="padding:4px;gap:4px;border-color:var(--ink)">
+          <label class="sr" for="ce">Kategória neve</label><input id="ce" value="${esc(c)}" style="border:0;outline:none;font-size:13px;width:${Math.max(8,c.length)+2}ch;padding:0 6px">
+          <button type="button" data-cmv="${gi}:${ci}:-1" aria-label="Balra" ${ci===0?'disabled':''}>‹</button>
+          <button type="button" data-cmv="${gi}:${ci}:1" aria-label="Jobbra" ${ci===g.items.length-1?'disabled':''}>›</button>
+          <button type="submit" aria-label="Mentés" style="background:var(--ink);color:#fff">${ic('check',12,'#fff',3)}</button>
+        </form>` : `<span class="chip">${esc(c)}<button type="button" data-edc="${gi}:${ci}" aria-label="${esc(c)} átnevezése">${ic('edit',12)}</button><button type="button" data-rmc="${gi}:${ci}" aria-label="${esc(c)} törlése">${ic('trash',12)}</button></span>`).join('')}</div>
+      <form data-addc="${gi}" style="display:flex;gap:8px"><label class="sr" for="nc${gi}">Új kategória ide: ${esc(g.title)}</label><input id="nc${gi}" class="input" placeholder="Új kategória…" style="min-height:40px"><button class="btn sm" type="submit" aria-label="Kategória hozzáadása">${ic('plus',14)}</button></form>
+      <div style="display:flex;justify-content:flex-end">${S.confirmDel===gi
+        ? `<span style="display:flex;gap:8px;align-items:center;font-size:13px;font-weight:600">Biztosan törli a csoportot?<button class="btn sm" type="button" data-gdel="${gi}" style="background:var(--red);border-color:var(--red);color:#fff">Igen, törlés</button><button class="btn ghost sm" type="button" data-gdelno>Mégse</button></span>`
+        : `<button class="btn ghost sm" type="button" data-gdelask="${gi}" style="color:var(--red-d)">${ic('trash',14)}Csoport törlése</button>`}</div>
     </div>`).join('')}
   </div>`;
-  v.querySelectorAll('[data-addc]').forEach(fm=>fm.addEventListener('submit',e=>{e.preventDefault(); const i=+fm.dataset.addc; const val=fm.querySelector('input').value.trim(); if(val){S.groups[i].items.push(val); render(); toast('Kategória hozzáadva');}}));
-  document.getElementById('addGroup').addEventListener('click',()=>{S.groups.push({title:'Új csoport',icon:'box',items:[]});render();});
+  const ce=document.getElementById('ce'); if(ce){ ce.focus(); ce.select(); }
+  v.querySelectorAll('[data-addc]').forEach(fm=>fm.addEventListener('submit',e=>{e.preventDefault(); const i=+fm.dataset.addc; const val=fm.querySelector('input').value.trim(); if(val){S.groups[i].items.push(val); log('Új kategória: '+val+' ('+S.groups[i].title+')'); render(); toast('Kategória hozzáadva'); document.getElementById('nc'+i).focus();}}));
+  v.querySelectorAll('[data-chipform]').forEach(fm=>fm.addEventListener('submit',e=>{e.preventDefault(); const [g,c]=fm.dataset.chipform.split(':').map(Number); const val=fm.querySelector('input').value.trim(); const old=S.groups[g].items[c]; if(val&&val!==old){S.groups[g].items[c]=val; log('Kategória átnevezve: '+old+' → '+val);} S.editChip=null; render(); if(val!==old) toast('Kategória átnevezve');}));
+  v.querySelectorAll('[data-gtitle]').forEach(inp=>inp.addEventListener('change',e=>{const g=S.groups[+inp.dataset.gtitle]; const val=e.target.value.trim()||'Névtelen csoport'; if(val!==g.title){log('Csoport átnevezve: '+g.title+' → '+val); g.title=val; render(); toast('Csoport átnevezve');}}));
+  v.querySelectorAll('[data-gicon]').forEach(sel=>sel.addEventListener('change',e=>{S.groups[+sel.dataset.gicon].icon=e.target.value; render();}));
+  document.getElementById('addGroup').addEventListener('click',()=>{S.groups.push({title:'Új csoport',icon:'box',items:[]}); log('Új kategóriacsoport'); render(); const i=S.groups.length-1; const t=document.getElementById('gt'+i); t.scrollIntoView({block:'center'}); t.focus(); t.select();});
 }
 
 function vPrice(v){
@@ -553,13 +583,19 @@ function vShop(v){
 }
 
 /* ---------------- Events ---------------- */
-document.getElementById('loginForm').addEventListener('submit', e => { e.preventDefault(); document.getElementById('login').style.display='none'; document.getElementById('app').classList.add('on'); S.view = S.view==='edit'?'products':S.view; render(); });
+document.getElementById('loginForm').addEventListener('submit', e => { e.preventDefault(); document.getElementById('login').style.display='none'; document.getElementById('app').classList.add('on'); S.view = S.view==='edit'?'products':S.view; S.editChip=null; S.confirmDel=null; render(); });
 document.getElementById('logout').addEventListener('click', () => { document.getElementById('app').classList.remove('on'); document.getElementById('login').style.display=''; });
 document.addEventListener('click', e => {
   if(e.target.closest('#resetDemo')){ BB.reset(); S=BB.data; ui(); render(); toast('Bemutató visszaállítva az eredeti tartalomra'); return; }
-  const t = e.target.closest('[data-go],[data-open],[data-new],[data-edit],[data-del],[data-mv],[data-unfeat],[data-rmc]');
+  const t = e.target.closest('[data-gmv],[data-cmv],[data-edc],[data-gdel],[data-gdelask],[data-gdelno],[data-go],[data-open],[data-new],[data-edit],[data-del],[data-mv],[data-unfeat],[data-rmc]');
   if(!t) return;
-  if(t.dataset.go){ go(t.dataset.go); }
+  if(t.dataset.gmv){ const [i,d]=t.dataset.gmv.split(':').map(Number); const j=i+d; [S.groups[i],S.groups[j]]=[S.groups[j],S.groups[i]]; log('Csoportsorrend módosítva'); S.confirmDel=null; render(); const b=document.querySelector(`[data-gmv="${j}:${d}"]`)||document.querySelector(`[data-gmv="${j}:${-d}"]`); if(b) b.focus(); }
+  else if(t.dataset.cmv){ const [g,c,d]=t.dataset.cmv.split(':').map(Number); const it=S.groups[g].items, k=c+d; const cur=document.getElementById('ce'); if(cur) it[c]=cur.value.trim()||it[c]; [it[c],it[k]]=[it[k],it[c]]; S.editChip=g+':'+k; render(); }
+  else if(t.dataset.edc){ S.editChip=t.dataset.edc; render(); }
+  else if(t.dataset.gdelask){ S.confirmDel=+t.dataset.gdelask; render(); }
+  else if(t.hasAttribute('data-gdelno')){ S.confirmDel=null; render(); }
+  else if(t.dataset.gdel){ const g=S.groups.splice(+t.dataset.gdel,1)[0]; S.confirmDel=null; log('Csoport törölve: '+g.title); render(); toast('Csoport törölve: '+g.title); }
+  else if(t.dataset.go){ go(t.dataset.go); }
   else if(t.dataset.open){ S.openOrder = S.openOrder===t.dataset.open ? null : t.dataset.open; render(); }
   else if(t.hasAttribute('data-new')){ S.editing='new'; go('edit'); }
   else if(t.dataset.edit){ S.editing=+t.dataset.edit; go('edit'); }

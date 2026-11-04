@@ -175,6 +175,9 @@ textarea.inp{padding:12px 14px;min-height:90px;resize:vertical}
 .chk input{width:20px;height:20px;accent-color:var(--red);margin:1px 0 0;flex:0 0 auto}
 .success{max-width:640px;margin:0 auto;padding:72px 16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px}
 .success .ok{width:88px;height:88px;border-radius:50%;background:var(--red);display:inline-flex;align-items:center;justify-content:center}
+.okmodal{position:fixed;inset:0;z-index:75;display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
+.okbox{background:#fff;border-radius:28px;padding:36px 32px;max-width:520px;width:100%;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px;box-shadow:0 30px 80px -20px rgba(0,0,0,.45);margin:auto}
+.okbox .ok{width:80px;height:80px;border-radius:50%;background:var(--red);display:inline-flex;align-items:center;justify-content:center}
 #toast{position:fixed;left:50%;bottom:28px;z-index:80;transform:translateX(-50%) translateY(140px);background:var(--ink);color:#fff;padding:14px 20px;border-radius:999px;font-weight:600;font-size:14px;transition:transform .25s ease;z-index:50;max-width:calc(100vw - 32px)}
 #toast.on{transform:translateX(-50%) translateY(0)}
 @media (max-width:760px){.hide-m{display:none!important} header{position:static} .panel{padding:26px;min-height:0}}
@@ -342,6 +345,7 @@ textarea.inp{padding:12px 14px;min-height:90px;resize:vertical}
   <div id="coBody"></div>
 </div>
 
+<div class="okmodal" id="okModal" role="dialog" aria-modal="true" aria-labelledby="okTitle" hidden></div>
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script src="data.js"></script>
@@ -465,14 +469,14 @@ textarea.inp{padding:12px 14px;min-height:90px;resize:vertical}
     var a = e.target.closest('[data-add]');
     if (a) { var p = BB.product(+a.dataset.add); BB.cartAdd(+a.dataset.add); BB.save(); renderCartBtn(true); toast('Kosárba téve: ' + (p ? p.name : '')); return; }
     if (e.target.closest('#cartBtn')) { openCart(); return; }
-    if (e.target.closest('[data-close-cart]') || e.target.id === 'ovl') { closeCart(); return; }
+    if (e.target.closest('[data-close-cart]') || (e.target.id === 'ovl' && $('okModal').hidden)) { closeCart(); return; }
     var q = e.target.closest('[data-qty]');
     if (q) { var c = BB.data.cart.find(function(x){ return x.id === +q.dataset.id; }); BB.cartSet(+q.dataset.id, (c?c.qty:0) + (+q.dataset.qty)); BB.save(); renderCart(); renderCartBtn(); return; }
     var r = e.target.closest('[data-rm]');
     if (r) { BB.cartSet(+r.dataset.rm, 0); BB.save(); renderCart(); renderCartBtn(); return; }
     if (e.target.closest('#toCheckout')) { openCheckout(); return; }
     if (e.target.closest('#coBack')) { closeCheckout(); openCart(); return; }
-    if (e.target.closest('#coHome')) { closeCheckout(); window.scrollTo(0,0); return; }
+    if (e.target.closest('#okClose') || (e.target.id === 'okModal')) { closeSuccess(); return; }
     var c = e.target.closest('[data-chip]');
     if (c) { if (lastChip && lastQuery === c.dataset.chip) { search('', false); } else { search(c.dataset.chip, true); $('results').scrollIntoView({block:'nearest'}); } return; }
     if (e.target.closest('#clearRes')) { $('q').value=''; search('', false); return; }
@@ -516,7 +520,7 @@ textarea.inp{padding:12px 14px;min-height:90px;resize:vertical}
   }
   function openCart(){ lastFocus = document.activeElement; renderCart(); $('ovl').hidden = false; $('drawer').hidden = false; document.body.style.overflow='hidden'; $('drawer').querySelector('.xbtn').focus(); }
   function closeCart(){ $('ovl').hidden = true; $('drawer').hidden = true; document.body.style.overflow=''; if (lastFocus) lastFocus.focus(); }
-  document.addEventListener('keydown', function(e){ if (e.key !== 'Escape') return; if (!$('checkout').hidden) { closeCheckout(); openCart(); } else if (!$('drawer').hidden) closeCart(); });
+  document.addEventListener('keydown', function(e){ if (e.key !== 'Escape') return; if (!$('okModal').hidden) { closeSuccess(); return; } if (!$('checkout').hidden) { closeCheckout(); openCart(); } else if (!$('drawer').hidden) closeCart(); });
 
   /* ---------- megrendelés ---------- */
   function openCheckout(){
@@ -575,18 +579,23 @@ textarea.inp{padding:12px 14px;min-height:90px;resize:vertical}
       var o = BB.placeOrder({ name: v('c-name'), email: v('c-mail'), tel: v('c-tel'), ship: ship, pay: f.querySelector('input[name=pay]:checked').value,
         addr: ship === 'Házhozszállítás' ? (v('c-zip') + ' ' + v('c-city') + ', ' + v('c-street')) : '', note: v('c-note') });
       BB.save(); renderCartBtn();
-      $('coTitle').textContent = 'Köszönjük!'; $('coBack').hidden = true;
-      $('coBody').innerHTML = '<div class="success"><span class="ok">'+'<svg aria-hidden="true" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>'+
-        '<h2 class="h2">Megrendelését rögzítettük!</h2>'+
-        '<div class="mono" style="font-size:15px;font-weight:700;background:#fff;border:1px solid var(--line);padding:10px 16px;border-radius:12px">Rendelésszám: '+E(o.no)+'</div>'+
-        '<p style="margin:0;font-size:17px;line-height:1.55;color:var(--muted)">Visszaigazolást küldünk a(z) <b style="color:var(--ink)">'+E(o.info.email)+'</b> címre. '+(o.info.ship==='Személyes átvétel'?'Amint a termékek átvehetők, értesítjük – üzletünkben várjuk!':'A csomag feladásakor értesítjük.')+'</p>'+
-        '<p style="margin:0;font-size:14px;color:var(--muted2)">Fizetendő: <b>'+ft(o.total)+'</b> · '+E(o.info.pay)+'</p>'+
-        '<div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center"><button type="button" class="btn dark" id="coHome">Vissza a főoldalra</button><a class="btn line" href="admin.html">Megnézem az adminban →</a></div>'+
-        '<p style="margin:0;font-size:12px;color:var(--muted2)">Bemutató: a rendelés csak ebben a böngészőben jött létre, az admin felület Rendelések menüjében látható.</p></div>';
-      $('checkout').scrollTop = 0;
+      closeCheckout(); render(); window.scrollTo(0,0); showSuccess(o);
     });
     $('c-name').focus();
   }
+  function showSuccess(o){
+    var m = $('okModal');
+    m.innerHTML = '<div class="okbox" role="document"><span class="ok"><svg aria-hidden="true" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>'+
+      '<h2 id="okTitle" class="h2" style="font-size:32px">Sikeres rendelés!</h2>'+
+      '<div class="mono" style="font-size:15px;font-weight:700;background:var(--bg);padding:10px 16px;border-radius:12px">Rendelésszám: '+E(o.no)+'</div>'+
+      '<p style="margin:0;font-size:16px;line-height:1.55;color:var(--muted)">Köszönjük, '+E(o.info.name.split(' ').slice(-1)[0])+'! Visszaigazolást küldünk a(z) <b style="color:var(--ink)">'+E(o.info.email)+'</b> címre. '+(o.info.ship==='Személyes átvétel'?'Amint a termékek átvehetők, értesítjük – üzletünkben várjuk!':'A csomag feladásakor értesítjük.')+'</p>'+
+      '<div style="width:100%;border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:6px">'+o.items.map(function(i){ return '<div class="sumrow" style="font-size:14px"><span style="text-align:left">'+i.qty+' × '+E(i.name)+'</span><b style="white-space:nowrap">'+ft(i.qty*i.price)+'</b></div>'; }).join('')+
+        '<div class="sumrow total" style="margin-top:6px"><span>Fizetendő</span><b style="font-size:24px">'+ft(o.total)+'</b></div><span style="font-size:13px;color:var(--muted2);text-align:left">'+E(o.info.ship)+' · '+E(o.info.pay)+'</span></div>'+
+      '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;width:100%"><button type="button" class="btn dark" id="okClose" style="flex:1 1 180px">Vásárlás folytatása</button><a class="btn line" href="admin.html" style="flex:1 1 180px">Megnézem az adminban</a></div>'+
+      '<p style="margin:0;font-size:12px;color:var(--muted2)">Bemutató: a rendelés az admin felület Rendelések menüjében látható.</p></div>';
+    $('ovl').hidden = false; m.hidden = false; document.body.style.overflow = 'hidden'; $('okClose').focus();
+  }
+  function closeSuccess(){ $('okModal').hidden = true; $('ovl').hidden = true; document.body.style.overflow = ''; }
   function closeCheckout(){ $('checkout').hidden = true; $('coTitle').textContent = 'Megrendelés'; $('coBack').hidden = false; document.body.style.overflow=''; }
 
   window.addEventListener('pageshow', function(){ BB.reload(); render(); });
