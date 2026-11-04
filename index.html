@@ -60,7 +60,8 @@ header nav a:hover{color:var(--red)}
 .panel{flex:1 1 380px;min-width:0;position:relative;background:var(--red);color:#fff;border-radius:28px;padding:36px;display:flex;flex-direction:column;justify-content:space-between;gap:28px;overflow:hidden;min-height:460px}
 .panel>.layer{position:absolute;inset:0}
 .panel>*:not(.layer){position:relative}
-.panel .pimg{width:100%;height:170px;object-fit:contain;background:rgba(255,255,255,.95);border-radius:18px}
+.panel .ph{position:relative}
+.panel .pimg{width:100%;height:190px;object-fit:cover;background:#fff;border-radius:18px;display:block}
 .panel h2{margin:0;font-family:var(--display);font-size:clamp(30px,3.4vw,40px);font-weight:800;line-height:1.02;letter-spacing:-.02em}
 .panel .big{font-family:var(--display);font-size:clamp(40px,4.5vw,52px);font-weight:900;letter-spacing:-.03em;line-height:1}
 
@@ -75,7 +76,9 @@ header nav a:hover{color:var(--red)}
 .sechead{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-end}
 .pcard{background:#fff;border-radius:22px;overflow:hidden;display:flex;flex-direction:column;border:1px solid #EFEFEF}
 .pcard .img{height:170px;background-color:#FAFAFA;position:relative;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #EFEFEF}
-.pcard .img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:14px}
+.pcard .img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff}
+.pcard .img img.up{object-fit:contain;padding:14px}
+.illu{position:absolute;right:10px;bottom:10px;z-index:1;font:600 10px Inter,sans-serif;color:#fff;background:rgba(17,17,17,.55);padding:3px 7px;border-radius:6px}
 .pcard .cat{position:absolute;left:14px;top:14px;background:var(--ink);color:#fff;font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;z-index:1}
 .pcard .gar{position:absolute;right:14px;top:14px;font:11px var(--mono);color:var(--muted);z-index:1;background:rgba(250,250,250,.85);padding:2px 6px;border-radius:6px}
 .pcard .sale{position:absolute;left:14px;bottom:14px;background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;z-index:1}
@@ -83,7 +86,7 @@ header nav a:hover{color:var(--red)}
 .pcard h3{margin:0;font-size:16px;font-weight:700;line-height:1.35}
 .pcard p{margin:0;font-size:13px;line-height:1.5;color:var(--muted2)}
 .pcard .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.price{font-family:var(--display);font-size:26px;font-weight:900;letter-spacing:-.02em}
+.price{font-family:var(--display);font-size:26px;font-weight:900;letter-spacing:-.02em;white-space:nowrap}
 .addbtn{width:44px;height:44px;border-radius:50%;border:0;background:var(--red);display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
 .addbtn:hover{background:var(--red-d)}
 
@@ -94,7 +97,8 @@ header nav a:hover{color:var(--red)}
 .nbcard .chips{display:flex;flex-wrap:wrap;gap:6px}
 .nbcard .chips span{font:12px var(--mono);padding:5px 9px;border-radius:6px;background:#2A2A2E;color:#E4E4E7}
 .nbcard .foot{margin-top:auto;padding-top:14px;border-top:1px solid #2A2A2E;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.nbcard img{width:100%;height:140px;object-fit:contain;background:#fff;border-radius:12px}
+.nbcard .ph{position:relative}
+.nbcard img{width:100%;height:150px;object-fit:cover;background:#fff;border-radius:12px;display:block}
 .listbtn{min-height:44px;padding:0 18px;border-radius:999px;border:0;background:var(--red);color:#fff;font-weight:700;font-size:14px}
 .listbtn:hover{background:var(--red-d)}
 
@@ -365,7 +369,7 @@ textarea.inp{padding:12px 14px;min-height:90px;resize:vertical}
 
   function card(p){
     return '<article class="pcard card-hover"><div class="img dots">'+ic(BB.catIcon(p.cat),64,'#111',1.4)+
-      (p.img?'<img src="'+E(p.img)+'" alt="">':'')+
+      (p.img?'<img src="'+E(p.img)+'" alt=""'+(p.stock?'':' class="up"')+'>'+(p.stock?'<span class="illu">Illusztráció</span>':''):'')+
       '<span class="cat">'+E(p.cat)+'</span><span class="gar">Garancia '+E(p.gar)+'</span>'+(p.sale?'<span class="sale">AKCIÓ</span>':'')+
       '</div><div class="body"><h3>'+E(p.name)+'</h3>'+(p.spec?'<p>'+E(p.spec)+'</p>':'')+
       '<div class="foot"><span class="price">'+ft(p.price)+'</span><button type="button" class="addbtn" data-add="'+p.id+'" aria-label="Kosárba: '+E(p.name)+'">'+plus+'</button></div></div></article>';
@@ -389,7 +393,7 @@ textarea.inp{padding:12px 14px;min-height:90px;resize:vertical}
       '<div class="layer dots-w" aria-hidden="true"></div>'+
       '<svg class="layer" aria-hidden="true" width="340" height="340" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.16)" stroke-width=".6" style="inset:auto -70px -60px auto"><path d="'+BB.icons.cpu+'"/></svg>'+
       '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><span class="mono" style="font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase">'+E(D.heroLabel)+'</span><span style="background:#fff;color:#111;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:700">Garancia: '+E(h.gar)+'</span></div>'+
-      (h.img?'<img class="pimg" src="'+E(h.img)+'" alt="">':'')+
+      (h.img?'<div class="ph"><img class="pimg" src="'+E(h.img)+'" alt="">'+(h.stock?'<span class="illu">Illusztráció</span>':'')+'</div>':'')+
       '<div style="display:flex;flex-direction:column;gap:10px"><span style="font-size:14px;font-weight:600;opacity:.85">'+E(h.cat)+'</span><h2>'+E(h.name)+'</h2>'+(h.spec?'<span class="mono" style="font-size:13px;opacity:.85">'+E(h.spec)+'</span>':'')+'</div>'+
       '<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap"><div class="big">'+ft(h.price).replace(' Ft','')+'<span style="font-size:24px;font-weight:700"> Ft</span></div>'+
       '<button type="button" data-add="'+h.id+'" style="min-height:52px;padding:0 24px;border:0;border-radius:999px;background:#111;color:#fff;font-weight:700;font-size:15px">Kosárba +</button></div>';
@@ -412,7 +416,7 @@ textarea.inp{padding:12px 14px;min-height:90px;resize:vertical}
       var parts = n.spec.split('·').map(function(x){ return x.trim(); }).filter(Boolean);
       var screen = parts.length > 4 ? parts.shift() : '';
       var col = n.state === 'Új' ? '#7DD3A8' : '#FF6B6F';
-      return '<article class="nbcard card-hover">'+(n.img?'<img src="'+E(n.img)+'" alt="">':'')+
+      return '<article class="nbcard card-hover">'+(n.img?'<div class="ph"><img src="'+E(n.img)+'" alt="">'+(n.stock?'<span class="illu">Illusztráció</span>':'')+'</div>':'')+
         '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="mono" style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:'+col+'">'+E(n.state)+'</span><span style="font-size:12px;color:#8E8E96">'+E(screen)+'</span></div>'+
         '<h3>'+E(n.name)+'</h3><div class="chips">'+parts.map(function(c){ return '<span>'+E(c)+'</span>'; }).join('')+'</div>'+
         '<div class="foot"><span class="price">'+ft(n.price)+'</span><button type="button" class="listbtn" data-add="'+n.id+'">Kosárba</button></div></article>';

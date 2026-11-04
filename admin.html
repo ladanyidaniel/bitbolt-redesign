@@ -425,7 +425,7 @@ function vEdit(v){
     </div>
   </div>`;
   const f = id => document.getElementById(id);
-  const read = () => ({...p, name:f('f-name').value.trim(), cat:f('f-cat').value, state:f('f-state').value, price:+f('f-price').value||0, gar:f('f-gar').value.trim(), spec:f('f-spec').value.trim(), visible:f('f-vis').checked, featured:f('f-feat').checked, sale:f('f-sale').checked, img});
+  const read = () => ({...p, name:f('f-name').value.trim(), cat:f('f-cat').value, state:f('f-state').value, price:+f('f-price').value||0, gar:f('f-gar').value.trim(), spec:f('f-spec').value.trim(), visible:f('f-vis').checked, featured:f('f-feat').checked, sale:f('f-sale').checked, img, stock: !!(p.stock && img===p.img)});
   const pv = () => { const d=read(); f('pv').innerHTML = `
     <div class="img">${ic(catIcon(d.cat),64,'#111',1.4)}${d.img?`<img src="${d.img}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:14px">`:''}
       <span style="position:absolute;left:14px;top:14px;background:#111;color:#fff;font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px">${esc(d.cat)}</span>

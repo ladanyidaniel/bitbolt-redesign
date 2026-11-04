@@ -36,6 +36,18 @@ A logók helyén most piros szaggatott keret látszik. Ha az alábbi fájlokat b
 - `assets/bankcards.png` – elfogadott bankkártyák
 - `assets/veglegestorles.png` – NMHH adattörlés logó
 
+## Termékfotók
+
+A termékkártyákon lévő fotók **illusztrációk** (a kártyán is így jelölve), nem a konkrét termékek képei. Forrás: [Unsplash](https://unsplash.com/license), szabadon felhasználható képek:
+
+- Videókártya, AMD processzor – Christian Wiediger
+- Router (fekete) – dlxmedia.hu · Router (fehér) – Compare Fibre
+- Dell notebook – Erick Cerritos · Notebook (fehér asztalon) – Ihor Dvoretskyi
+- Pendrive – Barry A · Egér – chris panas · Billentyűzet – mirza mustofa
+- Intel processzor – Thorium · Alaplap – Rémy · Memória – OMAR SABRA
+
+Az adminban feltöltött saját fotó ezeket felülírja (és nem kap „Illusztráció” jelölést).
+
 ## Színek és betűk
 
 - Piros `#D7141A`, sötét `#111111`, fehér háttér

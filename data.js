@@ -2,44 +2,45 @@
    Az adatok a látogató böngészőjében (localStorage) mentődnek, szerver nélkül.
    Más látogatók nem látják egymás módosításait; az „Alaphelyzet” gomb visszaállítja az eredetit. */
 (function () {
-  var KEY = 'bitbolt-demo-v1';
+  var KEY = 'bitbolt-demo-v2';
 
   var id = 1;
   function mk(name, cat, price, gar, o) {
     o = o || {};
     return { id: id++, name: name, cat: cat, price: price, gar: gar, spec: o.spec || '',
-      featured: !!o.featured, sale: !!o.sale, visible: o.visible !== false, state: o.state || 'Új', img: '' };
+      featured: !!o.featured, sale: !!o.sale, visible: o.visible !== false, state: o.state || 'Új',
+      img: o.img ? 'assets/products/' + o.img + '.jpg' : '', stock: !!o.img };
   }
 
   function defaults() {
     id = 1;
     return {
       products: [
-        mk('Asus Dual GeForce RTX 5060 Ti O8G', 'Videókártya', 269000, '3 év', { featured: 1, spec: 'PCIe · 8 GB' }),
+        mk('Asus Dual GeForce RTX 5060 Ti O8G', 'Videókártya', 269000, '3 év', { featured: 1, spec: 'PCIe · 8 GB' , img: 'gpu' }),
         mk('480GB Kingspec SATA3 2,5" SSD', 'SSD', 32000, '2 év', { featured: 1, spec: 'SATA3 · 2,5"' }),
-        mk('Asus RT-AX1800U WiFi 6 router', 'WiFi router', 24500, '2 év', { featured: 1, spec: 'Dual Band · 1 Gb LAN · 1×USB · 1×WAN · 3×LAN' }),
-        mk('Asus RT-AX53U WiFi 6 router', 'WiFi router', 24800, '2 év', { featured: 1, spec: 'Dual Band · 1 Gb LAN · 1×WAN · 3×LAN' }),
-        mk('Fujitsu Lifebook E782', 'Notebook', 49000, '12 hónap', { sale: 1, state: 'Felújított', spec: '15,6" · i7-3540M · 8 GB · 256 GB SSD · Win 10 Pro' }),
-        mk('Fujitsu Lifebook U7410', 'Notebook', 90000, '12 hónap', { sale: 1, state: 'Felújított', spec: '14" FHD · i5-10310U · 8 GB · 256 GB SSD · Win 11 Pro' }),
-        mk('Dell Latitude 5400', 'Notebook', 99000, '12 hónap', { sale: 1, state: 'Felújított', spec: '14" · i5-8265U · 16 GB · 256 GB SSD · Win 10 Pro' }),
-        mk('HP ProBook 640 G8', 'Notebook', 105000, '12 hónap', { sale: 1, state: 'Felújított', spec: '14" FHD · i3-1115G4 · 8 GB · 256 GB SSD · Win 11 Pro' }),
-        mk('Dell Latitude 5410', 'Notebook', 105000, '12 hónap', { sale: 1, state: 'Felújított', spec: '14" FHD · i5-10210U · 8 GB · 256 GB SSD · Win 11 Pro' }),
-        mk('HP ProBook 455 G7', 'Notebook', 115000, '1 év', { sale: 1, state: 'Felújított', spec: '15,6" FHD · Ryzen 5 4560 · 8 GB · 256 GB SSD · Win 11 Pro' }),
-        mk('Dell Latitude 5520', 'Notebook', 160000, '12 hónap', { sale: 1, state: 'Felújított', spec: '15,6" FHD érintő · i5-1135G7 · 16 GB · 512 GB SSD · Win 11 Pro' }),
-        mk('Lenovo V15 G4 AMN', 'Notebook', 179900, '12 hónap', { sale: 1, spec: '15,6" FHD · Ryzen 3 7320U · 8 GB · 256 GB NVMe · Win 11 Pro' }),
+        mk('Asus RT-AX1800U WiFi 6 router', 'WiFi router', 24500, '2 év', { featured: 1, spec: 'Dual Band · 1 Gb LAN · 1×USB · 1×WAN · 3×LAN' , img: 'router-1' }),
+        mk('Asus RT-AX53U WiFi 6 router', 'WiFi router', 24800, '2 év', { featured: 1, spec: 'Dual Band · 1 Gb LAN · 1×WAN · 3×LAN' , img: 'router-2' }),
+        mk('Fujitsu Lifebook E782', 'Notebook', 49000, '12 hónap', { sale: 1, state: 'Felújított', spec: '15,6" · i7-3540M · 8 GB · 256 GB SSD · Win 10 Pro' , img: 'notebook' }),
+        mk('Fujitsu Lifebook U7410', 'Notebook', 90000, '12 hónap', { sale: 1, state: 'Felújított', spec: '14" FHD · i5-10310U · 8 GB · 256 GB SSD · Win 11 Pro' , img: 'notebook' }),
+        mk('Dell Latitude 5400', 'Notebook', 99000, '12 hónap', { sale: 1, state: 'Felújított', spec: '14" · i5-8265U · 16 GB · 256 GB SSD · Win 10 Pro' , img: 'notebook-dell' }),
+        mk('HP ProBook 640 G8', 'Notebook', 105000, '12 hónap', { sale: 1, state: 'Felújított', spec: '14" FHD · i3-1115G4 · 8 GB · 256 GB SSD · Win 11 Pro' , img: 'notebook' }),
+        mk('Dell Latitude 5410', 'Notebook', 105000, '12 hónap', { sale: 1, state: 'Felújított', spec: '14" FHD · i5-10210U · 8 GB · 256 GB SSD · Win 11 Pro' , img: 'notebook-dell' }),
+        mk('HP ProBook 455 G7', 'Notebook', 115000, '1 év', { sale: 1, state: 'Felújított', spec: '15,6" FHD · Ryzen 5 4560 · 8 GB · 256 GB SSD · Win 11 Pro' , img: 'notebook' }),
+        mk('Dell Latitude 5520', 'Notebook', 160000, '12 hónap', { sale: 1, state: 'Felújított', spec: '15,6" FHD érintő · i5-1135G7 · 16 GB · 512 GB SSD · Win 11 Pro' , img: 'notebook-dell' }),
+        mk('Lenovo V15 G4 AMN', 'Notebook', 179900, '12 hónap', { sale: 1, spec: '15,6" FHD · Ryzen 3 7320U · 8 GB · 256 GB NVMe · Win 11 Pro' , img: 'notebook' }),
         mk('Windows 10/11 Professional digitális licensz', 'Szoftver', 14000, '—', { sale: 1, spec: 'Bármely géphez, azonnal aktiválható' }),
-        mk('Kingston DTXG2 128 GB USB 3.2', 'Pen Drive', 7600, '5 év'),
+        mk('Kingston DTXG2 128 GB USB 3.2', 'Pen Drive', 7600, '5 év', { img: 'pendrive' }),
         mk('Kingston microSDXC 128 GB Cl10', 'Memóriakártya', 16500, '5 év'),
         mk('Gembird 2,5" külső HDD ház, USB 3.0', 'USB eszköz', 4000, '1 év'),
-        mk('Meetion M371 USB gaming egér, világítós', 'Egér', 2500, '1 év'),
+        mk('Meetion M371 USB gaming egér, világítós', 'Egér', 2500, '1 év', { img: 'mouse' }),
         mk('Mercusys MW300UH USB WiFi adapter 300M', 'WiFi vevő', 4800, '2 év'),
-        mk('Gembird MUSG-07 RGB gaming egér', 'Egér', 3500, '1 év'),
-        mk('Genius Scorpion K220 billentyűzet, magyar', 'Billentyűzet', 6000, '1 év'),
-        mk('AMD Ryzen 7 5700G OEM TRAY', 'Processzor', 93000, '3 év'),
-        mk('Intel Core i5-14400F BOX', 'Processzor', 72000, '3 év'),
-        mk('Gigabyte B760M D3HP DDR5', 'Alaplap', 45000, '3 év'),
-        mk('Kingston Fury Beast DDR4 8 GB 3200 MHz', 'Memória', 46800, '3 év'),
-        mk('DDR3 4 GB 1600 MHz', 'Memória', 6900, '3 év', { visible: false })
+        mk('Gembird MUSG-07 RGB gaming egér', 'Egér', 3500, '1 év', { img: 'mouse' }),
+        mk('Genius Scorpion K220 billentyűzet, magyar', 'Billentyűzet', 6000, '1 év', { img: 'keyboard' }),
+        mk('AMD Ryzen 7 5700G OEM TRAY', 'Processzor', 93000, '3 év', { img: 'cpu-amd' }),
+        mk('Intel Core i5-14400F BOX', 'Processzor', 72000, '3 év', { img: 'cpu-intel' }),
+        mk('Gigabyte B760M D3HP DDR5', 'Alaplap', 45000, '3 év', { img: 'motherboard' }),
+        mk('Kingston Fury Beast DDR4 8 GB 3200 MHz', 'Memória', 46800, '3 év', { img: 'memory' }),
+        mk('DDR3 4 GB 1600 MHz', 'Memória', 6900, '3 év', { visible: false, img: 'memory' })
       ],
       heroId: 1,
       heroLabel: 'Kiemelt ajánlat',
