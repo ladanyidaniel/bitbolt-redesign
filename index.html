@@ -3,771 +3,402 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BIT BOLT – főoldal</title>
+<title>BIT BOLT – számítástechnika szakértőktől (koncepcióterv)</title>
+<meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-body{margin:0}
-a{color:#111;text-decoration:none}a:hover{color:#B30F14}
-.bb-nav a:hover{color:#D7141A}
-.bb-card{transition:transform .18s ease, box-shadow .18s ease}
-.bb-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -18px rgba(17,17,17,.35)}
-.bb-chip:hover{background:#111;color:#fff;border-color:#111}
-.bb-dots{background-image:radial-gradient(rgba(17,17,17,.12) 1px, transparent 1px);background-size:14px 14px}
-.bb-dots-w{background-image:radial-gradient(rgba(255,255,255,.22) 1px, transparent 1px);background-size:16px 16px}
-@media (max-width: 760px){
-.bb-hide-m{display:none !important}
-.bb-h1{font-size:44px !important}
-}
+:root{--red:#D7141A;--red-d:#B30F14;--red-l:#FDECEC;--ink:#111;--line:#ECECEC;--muted:#52525B;--muted2:#71717A;--bg:#F6F6F7;
+  --display:Archivo,Inter,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:#fff;overflow-x:clip}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid #2563EB;outline-offset:2px}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+.mono{font-family:var(--mono)}
+.eyebrow{font:700 13px var(--mono);color:var(--red);letter-spacing:.12em;text-transform:uppercase}
+.h2{margin:0;font-family:var(--display);font-size:clamp(32px,4.5vw,44px);font-weight:900;letter-spacing:-.03em;line-height:1.02}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 26px;border-radius:999px;font-weight:700;font-size:16px;border:2px solid var(--ink)}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.dark:hover{background:#333;border-color:#333}
+.btn.line:hover{background:var(--ink);color:#fff}
+.btn.line:hover svg{stroke:#fff}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.dots{background-image:radial-gradient(rgba(17,17,17,.12) 1px,transparent 1px);background-size:14px 14px}
+.dots-w{background-image:radial-gradient(rgba(255,255,255,.22) 1px,transparent 1px);background-size:16px 16px}
+.card-hover{transition:transform .18s ease,box-shadow .18s ease}
+.card-hover:hover{transform:translateY(-4px);box-shadow:0 18px 40px -18px rgba(17,17,17,.35)}
+.slot{position:relative;display:flex;align-items:center;justify-content:center;text-align:center;border:2px dashed currentColor;border-radius:10px;font:700 11px/1.3 var(--mono)}
+.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;border-radius:8px}
+
+/* concept + announcement bars */
+.concept{background:#FFF7ED;color:#9A3412;font-size:13px;font-weight:600;border-bottom:1px solid #FED7AA}
+.concept .wrap{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;justify-content:space-between;padding-block:9px}
+.concept a{text-decoration:underline}
+.ann{background:var(--red);color:#fff;font-weight:700;font-size:14px;text-align:center;padding:10px 16px}
+.util{background:var(--ink);color:#E7E7E7;font-size:13px}
+.util .wrap{display:flex;flex-wrap:wrap;gap:8px 28px;align-items:center;justify-content:space-between;padding-block:10px}
+.util span{display:inline-flex;gap:8px;align-items:center}
+
+header{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:20}
+header .wrap{display:flex;flex-wrap:wrap;gap:14px 32px;align-items:center;justify-content:space-between;padding-block:14px}
+header nav{display:flex;flex-wrap:wrap;gap:6px 24px;font-size:15px;font-weight:600}
+header nav a:hover{color:var(--red)}
+.pillbtn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 18px;border-radius:999px;font-size:14px;font-weight:700}
+.badge{background:var(--red);color:#fff;border-radius:999px;padding:1px 8px;font-size:12px;min-width:22px;text-align:center}
+
+/* hero */
+.hero{display:flex;flex-wrap:wrap;gap:40px;align-items:stretch;padding-block:clamp(40px,6vw,80px) 48px}
+.hero .copy{flex:999 1 560px;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:28px}
+.hero h1{margin:0;font-family:var(--display);font-weight:900;font-size:clamp(46px,7vw,84px);line-height:.95;letter-spacing:-.035em}
+.tag{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;background:var(--red-l);color:var(--red-d);font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.checks{display:flex;flex-wrap:wrap;gap:10px 28px;font-size:14px;color:var(--muted)}
+.checks span{display:inline-flex;gap:8px;align-items:center}
+.panel{flex:1 1 380px;min-width:0;position:relative;background:var(--red);color:#fff;border-radius:28px;padding:36px;display:flex;flex-direction:column;justify-content:space-between;gap:28px;overflow:hidden;min-height:460px}
+.panel>.layer{position:absolute;inset:0}
+.panel>*:not(.layer){position:relative}
+.panel .pimg{width:100%;height:170px;object-fit:contain;background:rgba(255,255,255,.95);border-radius:18px}
+.panel h2{margin:0;font-family:var(--display);font-size:clamp(30px,3.4vw,40px);font-weight:800;line-height:1.02;letter-spacing:-.02em}
+.panel .big{font-family:var(--display);font-size:clamp(40px,4.5vw,52px);font-weight:900;letter-spacing:-.03em;line-height:1}
+
+/* services */
+.grid{display:grid;gap:16px}
+.svc{border:1px solid var(--line);border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:14px;background:#fff}
+.svc h3{margin:0;font-family:var(--display);font-size:22px;font-weight:800}
+.svc p{margin:0;font-size:15px;line-height:1.5;color:var(--muted)}
+.ibox{width:48px;height:48px;border-radius:14px;background:var(--ink);display:inline-flex;align-items:center;justify-content:center}
+
+/* products */
+.sechead{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-end}
+.pcard{background:#fff;border-radius:22px;overflow:hidden;display:flex;flex-direction:column;border:1px solid #EFEFEF}
+.pcard .img{height:170px;background-color:#FAFAFA;position:relative;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #EFEFEF}
+.pcard .img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:14px}
+.pcard .cat{position:absolute;left:14px;top:14px;background:var(--ink);color:#fff;font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;z-index:1}
+.pcard .gar{position:absolute;right:14px;top:14px;font:11px var(--mono);color:var(--muted);z-index:1;background:rgba(250,250,250,.85);padding:2px 6px;border-radius:6px}
+.pcard .sale{position:absolute;left:14px;bottom:14px;background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;z-index:1}
+.pcard .body{padding:20px;display:flex;flex-direction:column;gap:12px;flex:1}
+.pcard h3{margin:0;font-size:16px;font-weight:700;line-height:1.35}
+.pcard p{margin:0;font-size:13px;line-height:1.5;color:var(--muted2)}
+.pcard .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.price{font-family:var(--display);font-size:26px;font-weight:900;letter-spacing:-.02em}
+.addbtn{width:44px;height:44px;border-radius:50%;border:0;background:var(--red);display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.addbtn:hover{background:var(--red-d)}
+
+/* notebooks */
+.nb{background:var(--ink);color:#fff;padding:80px 0;overflow:hidden}
+.nbcard{background:#1C1C1F;border:1px solid #2A2A2E;border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:16px}
+.nbcard h3{margin:0;font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-.01em}
+.nbcard .chips{display:flex;flex-wrap:wrap;gap:6px}
+.nbcard .chips span{font:12px var(--mono);padding:5px 9px;border-radius:6px;background:#2A2A2E;color:#E4E4E7}
+.nbcard .foot{margin-top:auto;padding-top:14px;border-top:1px solid #2A2A2E;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.nbcard img{width:100%;height:140px;object-fit:contain;background:#fff;border-radius:12px}
+.listbtn{min-height:44px;padding:0 18px;border-radius:999px;border:0;background:var(--red);color:#fff;font-weight:700;font-size:14px}
+.listbtn:hover{background:var(--red-d)}
+
+/* categories */
+.search{display:flex;align-items:center;gap:10px;min-height:54px;padding:0 8px 0 20px;border:2px solid var(--ink);border-radius:999px;flex:0 1 440px;min-width:260px}
+.search input{flex:1;min-width:0;border:0;outline:none;font-size:15px;font-weight:500;background:transparent}
+.search button{min-height:40px;padding:0 18px;border:0;border-radius:999px;background:var(--red);color:#fff;font-weight:700;font-size:14px}
+.group{border:1px solid var(--line);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.group h3{margin:0;font-family:var(--display);font-size:19px;font-weight:800}
+.chip{font-size:13px;font-weight:500;padding:7px 12px;border:1px solid #E4E4E7;border-radius:999px;color:#27272A;background:#fff}
+.chip:hover,.chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.results{border:2px solid var(--ink);border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:18px}
+
+/* more */
+.morelist{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 32px;border-top:2px solid var(--ink)}
+.morelist>div{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+
+footer{background:var(--red);color:#fff;position:relative;overflow:hidden}
+.fcard{background:#fff;color:var(--ink);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:8px}
+.fcard .eyebrow{font-size:12px;letter-spacing:.08em;color:var(--red-d)}
+.fcard b{font-size:17px}
+
+#toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(140px);background:var(--ink);color:#fff;padding:14px 20px;border-radius:999px;font-weight:600;font-size:14px;transition:transform .25s ease;z-index:50;max-width:calc(100vw - 32px)}
+#toast.on{transform:translateX(-50%) translateY(0)}
+@media (max-width:760px){.hide-m{display:none!important} header{position:static} .panel{padding:26px;min-height:0}}
 </style>
 </head>
 <body>
-<div style="font-family: Inter, system-ui, sans-serif; color: #111111; background: #FFFFFF; min-height: 100vh; overflow-x: clip">
 
-<!-- Utility bar -->
-<div style="background: #111111; color: #E7E7E7; font-size: 13px">
-<div style="max-width: 1280px; margin: 0 auto; padding: 10px clamp(16px, 4vw, 40px); display: flex; flex-wrap: wrap; gap: 8px 28px; align-items: center; justify-content: space-between">
-<div style="display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center">
-<span style="display: inline-flex; gap: 8px; align-items: center"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF4D52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>9022 Győr, Móricz Zsigmond rakpart 22</span>
-<span style="display: inline-flex; gap: 8px; align-items: center"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF4D52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>H–P 9–18 · Szo 9–13</span>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center">
-<a href="tel:0696316538" style="color: #FFFFFF; font-weight: 600">96/316-538</a>
-<span class="bb-hide-m" style="color: #A1A1A1">Fax: 96/335-318</span>
-<a href="mailto:info@bitbolt.hu" style="color: #FFFFFF">info@bitbolt.hu</a>
-</div>
-</div>
-</div>
+<div class="concept"><div class="wrap">
+  <span>Koncepcióterv – ez nem a BIT BOLT hivatalos weboldala. A valódi oldal: <a href="https://www.bitbolt.hu/">bitbolt.hu</a></span>
+  <span>Próbálja ki: <a href="admin.html">belépés az admin felületre →</a></span>
+</div></div>
+<div class="ann" id="ann" hidden></div>
 
-<!-- Header -->
-<header style="border-bottom: 1px solid #ECECEC; background: #FFFFFF">
-<div style="max-width: 1280px; margin: 0 auto; padding: 18px clamp(16px, 4vw, 40px); display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between">
-<a href="#top" aria-label="BIT BOLT főoldal" style="position: relative; display: flex; align-items: center; justify-content: center; width: 210px; height: 70px; border: 2px dashed #D7141A; border-radius: 10px; color: #D7141A; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; text-align: center; line-height: 1.3; box-sizing: border-box"><img src="assets/logo.png" alt="BIT BOLT" onerror="this.remove()" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #FFFFFF; border-radius: 8px">[ BIT BOLT LOGÓ ]<br>logo.png – 210×70</a>
-<nav class="bb-nav" aria-label="Főmenü" style="display: flex; flex-wrap: wrap; gap: 6px 26px; font-size: 15px; font-weight: 600">
-<a href="#top" style="color: #D7141A">Főoldal</a>
-<a href="#rolunk">Magunkról</a>
-<a href="#referenciak">Referenciák</a>
-<a href="#kapcsolat">Elérhetőség</a>
-<a href="#arlista">Árlista</a>
-<a href="#aruhitel">Áruhitel</a>
-</nav>
-<div style="display: flex; gap: 10px; align-items: center">
-<a href="#lista" aria-label="Lista: 0 termék" style="display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 16px; border: 1px solid #E2E2E2; border-radius: 999px; font-size: 14px; font-weight: 600">
-<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"></path><circle cx="3.5" cy="6" r="1"></circle><circle cx="3.5" cy="12" r="1"></circle><circle cx="3.5" cy="18" r="1"></circle></svg>Lista <span style="background: #D7141A; color: #FFFFFF; border-radius: 999px; padding: 1px 8px; font-size: 12px">0</span>
-</a>
-<a href="#webaruhaz" style="display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 22px; background: #D7141A; color: #FFFFFF; border-radius: 999px; font-size: 14px; font-weight: 700">Webáruház
-<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
-</a>
-</div>
-</div>
-</header>
+<div class="util"><div class="wrap">
+  <div style="display:flex;flex-wrap:wrap;gap:8px 24px">
+    <span><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF4D52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><span data-f="addr"></span></span>
+    <span><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF4D52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>H–P <span data-f="week"></span> · Szo <span data-f="sat"></span></span>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px 24px">
+    <a data-tel style="color:#fff;font-weight:600"><span data-f="tel"></span></a>
+    <span class="hide-m" style="color:#A1A1A1">Fax: <span data-f="fax"></span></span>
+    <a data-mail style="color:#fff"><span data-f="email"></span></a>
+  </div>
+</div></div>
 
-<!-- Hero -->
-<section id="top" style="max-width: 1280px; margin: 0 auto; padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 40px) 48px; display: flex; flex-wrap: wrap; gap: 40px; align-items: stretch">
-<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 28px">
-<div style="display: inline-flex; align-self: flex-start; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 999px; background: #FDECEC; color: #B30F14; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase"><span style="width: 8px; height: 8px; border-radius: 50%; background: #D7141A"></span>Számítástechnikai szaküzlet · Győr</div>
-<h1 class="bb-h1" style="margin: 0; font-family: Archivo, Inter, sans-serif; font-weight: 900; font-size: 84px; line-height: .95; letter-spacing: -0.035em">Számítástechnika<br><span style="color: #D7141A">szakértőktől.</span></h1>
-<p style="margin: 0; max-width: 560px; font-size: 19px; line-height: 1.55; color: #3F3F46">Alkatrész, notebook, perifériák és szerviz egy helyen, a belváros szívében. Szakértő munkatársaink szeretettel várnak üzletünkben!</p>
-<div style="display: flex; flex-wrap: wrap; gap: 12px">
-<a href="#ajanlatok" style="display: inline-flex; align-items: center; height: 54px; padding: 0 28px; background: #111111; color: #FFFFFF; border-radius: 999px; font-weight: 700; font-size: 16px">Aktuális ajánlatok</a>
-<a href="#geposszerako" style="display: inline-flex; align-items: center; gap: 10px; height: 54px; padding: 0 26px; border: 2px solid #111111; color: #111111; border-radius: 999px; font-weight: 700; font-size: 16px">
-<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"></rect><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"></path></svg>Gép összerakó</a>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 10px 28px; padding-top: 8px; font-size: 14px; color: #52525B">
-<span style="display: inline-flex; gap: 8px; align-items: center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D7141A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Akár 5 év garancia</span>
-<span style="display: inline-flex; gap: 8px; align-items: center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D7141A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Áruhitel lehetőség</span>
-<span style="display: inline-flex; gap: 8px; align-items: center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D7141A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Bankkártyás fizetés</span>
-</div>
-</div>
+<header><div class="wrap">
+  <a href="#top" class="slot" aria-label="BIT BOLT főoldal" style="width:210px;height:70px;color:var(--red)">[ BIT BOLT LOGÓ ]<br>logo.png<img src="assets/logo.png" alt="BIT BOLT" onerror="this.remove()"></a>
+  <nav aria-label="Főmenü">
+    <a href="#top" style="color:var(--red)">Főoldal</a>
+    <a href="#rolunk">Magunkról</a>
+    <a href="#kategoriak">Termékek</a>
+    <a href="#notebook">Notebook akció</a>
+    <a href="#kapcsolat">Elérhetőség</a>
+    <a href="http://www.budapestbank.hu/szolgaltatas/lakossag/hitel-aruhitel.php" target="_blank" rel="noopener">Áruhitel</a>
+  </nav>
+  <div style="display:flex;gap:10px;align-items:center">
+    <a href="#lista" id="listBtn" class="pillbtn" style="border:1px solid #E2E2E2" aria-label="Lista">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg>Lista <span class="badge" id="listCount">0</span></a>
+    <a href="#ajanlatok" class="pillbtn" style="background:var(--red);color:#fff;padding:0 22px">Webáruház
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</div></header>
 
-<!-- Featured product panel -->
-<div style="flex: 1 1 400px; min-width: 0; position: relative; background: #D7141A; color: #FFFFFF; border-radius: 28px; padding: 36px; display: flex; flex-direction: column; justify-content: space-between; gap: 28px; overflow: hidden; min-height: 460px; box-sizing: border-box">
-<div class="bb-dots-w" aria-hidden="true" style="position: absolute; inset: 0; opacity: .9"></div>
-<svg aria-hidden="true" width="340" height="340" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.16)" stroke-width=".6" style="position: absolute; right: -70px; bottom: -60px"><rect x="6" y="6" width="12" height="12" rx="1.5"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M9 2v4M12 2v4M15 2v4M9 18v4M12 18v4M15 18v4M2 9h4M2 12h4M2 15h4M18 9h4M18 12h4M18 15h4"></path></svg>
-<div style="position: relative; display: flex; justify-content: space-between; align-items: center; gap: 12px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase">Kiemelt ajánlat</span>
-<span style="background: #FFFFFF; color: #111111; border-radius: 999px; padding: 6px 12px; font-size: 12px; font-weight: 700">Garancia: 3 év</span>
-</div>
-<div style="position: relative; display: flex; flex-direction: column; gap: 10px">
-<span style="font-size: 14px; font-weight: 600; opacity: .85">Videókártya</span>
-<h2 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 40px; font-weight: 800; line-height: 1.02; letter-spacing: -0.02em">Asus Dual GeForce RTX 5060 Ti O8G</h2>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; opacity: .85">PCIe · 8 GB</span>
-</div>
-<div style="position: relative; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap">
-<div style="font-family: Archivo, Inter, sans-serif; font-size: 52px; font-weight: 900; letter-spacing: -0.03em; line-height: 1">269.000<span style="font-size: 24px; font-weight: 700"> Ft</span></div>
-<button type="button" style="height: 52px; padding: 0 24px; border: 0; border-radius: 999px; background: #111111; color: #FFFFFF; font: 700 15px Inter, sans-serif; cursor: pointer">Listára +</button>
-</div>
-</div>
+<main id="top">
+<section class="wrap hero">
+  <div class="copy">
+    <div class="tag"><span style="width:8px;height:8px;border-radius:50%;background:var(--red)"></span>Számítástechnikai szaküzlet · Győr</div>
+    <h1>Számítástechnika<br><span style="color:var(--red)">szakértőktől.</span></h1>
+    <p style="margin:0;max-width:560px;font-size:19px;line-height:1.55;color:#3F3F46">Alkatrész, notebook, perifériák és szerviz egy helyen. Szakértő munkatársaink szeretettel várnak üzletünkben!</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px">
+      <a href="#ajanlatok" class="btn dark">Aktuális ajánlatok</a>
+      <a href="#kategoriak" class="btn line"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Termékkereső</a>
+    </div>
+    <div class="checks">
+      <span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D7141A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Akár 5 év garancia</span>
+      <span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D7141A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Áruhitel lehetőség</span>
+      <span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D7141A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Bankkártyás fizetés</span>
+    </div>
+  </div>
+  <div class="panel" id="heroPanel"></div>
 </section>
 
-<!-- Services -->
-<section id="rolunk" style="max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px) 72px">
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px">
-
-<div class="bb-card" style="border: 1px solid #ECECEC; border-radius: 20px; padding: 26px; display: flex; flex-direction: column; gap: 14px; background: #FFFFFF">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<span style="width: 48px; height: 48px; border-radius: 14px; background: #111111; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2M10 21h.01M17 21h.01"></path></svg>
-</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D7141A; font-weight: 700">01</span>
-</div>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 22px; font-weight: 800">Kereskedelem</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #52525B">Alkatrészek, perifériák, notebookok és szoftverek – raktárról, szakértő tanácsadással.</p>
-</div>
-
-<div class="bb-card" style="border: 1px solid #ECECEC; border-radius: 20px; padding: 26px; display: flex; flex-direction: column; gap: 14px; background: #FFFFFF">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<span style="width: 48px; height: 48px; border-radius: 14px; background: #111111; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"></path></svg>
-</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D7141A; font-weight: 700">02</span>
-</div>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 22px; font-weight: 800">Gyorsszerviz</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #52525B">Hibafeltárás, javítás és bővítés helyben, gyors átfutással.</p>
-</div>
-
-<div class="bb-card" style="border: 1px solid #ECECEC; border-radius: 20px; padding: 26px; display: flex; flex-direction: column; gap: 14px; background: #FFFFFF">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<span style="width: 48px; height: 48px; border-radius: 14px; background: #111111; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6zM9 12l2 2 4-4"></path></svg>
-</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D7141A; font-weight: 700">03</span>
-</div>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 22px; font-weight: 800">Vírusirtás</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #52525B">Kártevők eltávolítása, rendszer megtisztítása és védelem beállítása.</p>
-</div>
-
-<div class="bb-card" style="border: 1px solid #ECECEC; border-radius: 20px; padding: 26px; display: flex; flex-direction: column; gap: 14px; background: #FFFFFF">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<span style="width: 48px; height: 48px; border-radius: 14px; background: #111111; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"></path></svg>
-</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D7141A; font-weight: 700">04</span>
-</div>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 22px; font-weight: 800">Adatmentés</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #52525B">Sérült vagy hibás adathordozók adatainak visszaállítása.</p>
-</div>
-
-</div>
+<section id="rolunk" class="wrap" style="padding-bottom:72px">
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))" id="services"></div>
 </section>
 
-<!-- Featured offers -->
-<section id="ajanlatok" style="background: #F6F6F7; padding: 72px 0">
-<div style="max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); display: flex; flex-direction: column; gap: 32px">
-<div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end">
-<div style="display: flex; flex-direction: column; gap: 8px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D7141A; font-weight: 700; letter-spacing: .12em; text-transform: uppercase">Kiemelt ajánlatunk</span>
-<h2 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 44px; font-weight: 900; letter-spacing: -0.03em">Most érdemes lecsapni</h2>
-</div>
-<a href="#arlista" style="font-weight: 700; font-size: 15px; border-bottom: 2px solid #D7141A; padding-bottom: 2px">Teljes árlista letöltése (XLS)</a>
-</div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px">
-
-<article class="bb-card" style="background: #FFFFFF; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="bb-dots" style="height: 170px; background-color: #FAFAFA; position: relative; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #EFEFEF">
-<svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h20v10H2zM6 17v3M18 17v3M8 12a2 2 0 1 0 4 0 2 2 0 1 0-4 0M14 12a2 2 0 1 0 4 0 2 2 0 1 0-4 0"></path></svg>
-<span style="position: absolute; left: 14px; top: 14px; background: #111111; color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 999px; letter-spacing: .02em">Videókártya</span>
-<span style="position: absolute; right: 14px; top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #52525B">Garancia 3 év</span>
-</div>
-<div style="padding: 20px; display: flex; flex-direction: column; gap: 14px; flex: 1">
-<h3 style="margin: 0; font-size: 16px; font-weight: 700; line-height: 1.35">Asus Dual GeForce RTX 5060 Ti O8G</h3>
-<p style="margin: 0; font-size: 13px; line-height: 1.5; color: #71717A">PCIe · 8 GB</p>
-<div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 10px">
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 26px; font-weight: 900; letter-spacing: -0.02em">269.000 Ft</span>
-<button type="button" aria-label="Listára" style="width: 44px; height: 44px; border-radius: 50%; border: 0; background: #D7141A; color: #FFFFFF; cursor: pointer; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
-</button>
-</div>
-</div>
-</article>
-
-<article class="bb-card" style="background: #FFFFFF; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="bb-dots" style="height: 170px; background-color: #FAFAFA; position: relative; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #EFEFEF">
-<svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM8 7h8M8 11h8M9 17h.01M15 17h.01"></path></svg>
-<span style="position: absolute; left: 14px; top: 14px; background: #111111; color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 999px; letter-spacing: .02em">SSD</span>
-<span style="position: absolute; right: 14px; top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #52525B">Garancia 2 év</span>
-</div>
-<div style="padding: 20px; display: flex; flex-direction: column; gap: 14px; flex: 1">
-<h3 style="margin: 0; font-size: 16px; font-weight: 700; line-height: 1.35">480GB Kingspec SATA3 2,5&quot; SSD</h3>
-<p style="margin: 0; font-size: 13px; line-height: 1.5; color: #71717A">SATA3 · 2,5&quot;</p>
-<div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 10px">
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 26px; font-weight: 900; letter-spacing: -0.02em">32.000 Ft</span>
-<button type="button" aria-label="Listára" style="width: 44px; height: 44px; border-radius: 50%; border: 0; background: #D7141A; color: #FFFFFF; cursor: pointer; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
-</button>
-</div>
-</div>
-</article>
-
-<article class="bb-card" style="background: #FFFFFF; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="bb-dots" style="height: 170px; background-color: #FAFAFA; position: relative; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #EFEFEF">
-<svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a15 15 0 0 1 20 0M12 20h.01"></path></svg>
-<span style="position: absolute; left: 14px; top: 14px; background: #111111; color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 999px; letter-spacing: .02em">WiFi router</span>
-<span style="position: absolute; right: 14px; top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #52525B">Garancia 2 év</span>
-</div>
-<div style="padding: 20px; display: flex; flex-direction: column; gap: 14px; flex: 1">
-<h3 style="margin: 0; font-size: 16px; font-weight: 700; line-height: 1.35">Asus RT-AX1800U WiFi 6 router</h3>
-<p style="margin: 0; font-size: 13px; line-height: 1.5; color: #71717A">Dual Band · 1 Gb LAN · 1×USB · 1×WAN · 3×LAN</p>
-<div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 10px">
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 26px; font-weight: 900; letter-spacing: -0.02em">24.500 Ft</span>
-<button type="button" aria-label="Listára" style="width: 44px; height: 44px; border-radius: 50%; border: 0; background: #D7141A; color: #FFFFFF; cursor: pointer; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
-</button>
-</div>
-</div>
-</article>
-
-<article class="bb-card" style="background: #FFFFFF; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column">
-<div class="bb-dots" style="height: 170px; background-color: #FAFAFA; position: relative; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #EFEFEF">
-<svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a15 15 0 0 1 20 0M12 20h.01"></path></svg>
-<span style="position: absolute; left: 14px; top: 14px; background: #111111; color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 999px; letter-spacing: .02em">WiFi router</span>
-<span style="position: absolute; right: 14px; top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #52525B">Garancia 2 év</span>
-</div>
-<div style="padding: 20px; display: flex; flex-direction: column; gap: 14px; flex: 1">
-<h3 style="margin: 0; font-size: 16px; font-weight: 700; line-height: 1.35">Asus RT-AX53U WiFi 6 router</h3>
-<p style="margin: 0; font-size: 13px; line-height: 1.5; color: #71717A">Dual Band · 1 Gb LAN · 1×WAN · 3×LAN</p>
-<div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 10px">
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 26px; font-weight: 900; letter-spacing: -0.02em">24.800 Ft</span>
-<button type="button" aria-label="Listára" style="width: 44px; height: 44px; border-radius: 50%; border: 0; background: #D7141A; color: #FFFFFF; cursor: pointer; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
-</button>
-</div>
-</div>
-</article>
-
-</div>
-</div>
+<section id="ajanlatok" style="background:var(--bg);padding:72px 0">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:32px">
+    <div class="sechead">
+      <div style="display:flex;flex-direction:column;gap:8px"><span class="eyebrow">Kiemelt ajánlatunk</span><h2 class="h2">Most érdemes lecsapni</h2></div>
+      <a href="#kategoriak" style="font-weight:700;font-size:15px;border-bottom:2px solid var(--red);padding-bottom:2px">Összes termék</a>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px" id="featured"></div>
+  </div>
 </section>
 
-<!-- Notebook akció -->
-<section id="notebook" style="background: #111111; color: #FFFFFF; padding: 80px 0; position: relative; overflow: hidden">
-<div style="max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); display: flex; flex-direction: column; gap: 36px; position: relative">
-<div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: flex-end">
-<div style="display: flex; flex-direction: column; gap: 10px; max-width: 640px">
-<span style="align-self: flex-start; background: #D7141A; color: #FFFFFF; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; letter-spacing: .12em; padding: 6px 12px; border-radius: 6px">NOTEBOOK AKCIÓ!</span>
-<h2 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 52px; font-weight: 900; letter-spacing: -0.03em; line-height: 1">Felújított üzleti notebookok, <span style="color: #FF4D52">azonnal elvihetők.</span></h2>
-<p style="margin: 0; font-size: 17px; color: #B4B4BB; line-height: 1.55">Dell, HP, Fujitsu és Lenovo gépek SSD-vel, Windows Professional rendszerrel, 12 hónap garanciával.</p>
-</div>
-<a href="#notebook-mind" style="display: inline-flex; align-items: center; height: 50px; padding: 0 24px; border: 2px solid #FFFFFF; color: #FFFFFF; border-radius: 999px; font-weight: 700">Összes notebook</a>
-</div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px">
-
-<article class="bb-card" style="background: #1C1C1F; border: 1px solid #2A2A2E; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #FF6B6F">Felújított</span>
-<span style="font-size: 12px; color: #8E8E96">15,6&quot; · 1366×768</span>
-</div>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.01em">Fujitsu Lifebook E782</h3>
-<div style="display: flex; flex-wrap: wrap; gap: 6px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">i7-3540M</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">8 GB</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">256 GB SSD</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">Win 10 Pro</span>
-</div>
-<div style="margin-top: auto; padding-top: 14px; border-top: 1px solid #2A2A2E; display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em">49.000 Ft</span>
-<button type="button" style="height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: #D7141A; color: #FFFFFF; font: 700 14px Inter, sans-serif; cursor: pointer">Listára</button>
-</div>
-</article>
-
-<article class="bb-card" style="background: #1C1C1F; border: 1px solid #2A2A2E; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #FF6B6F">Felújított</span>
-<span style="font-size: 12px; color: #8E8E96">14&quot; · 1920×1080</span>
-</div>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.01em">Fujitsu Lifebook U7410</h3>
-<div style="display: flex; flex-wrap: wrap; gap: 6px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">i5-10310U</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">8 GB</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">256 GB SSD</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">Win 11 Pro</span>
-</div>
-<div style="margin-top: auto; padding-top: 14px; border-top: 1px solid #2A2A2E; display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em">90.000 Ft</span>
-<button type="button" style="height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: #D7141A; color: #FFFFFF; font: 700 14px Inter, sans-serif; cursor: pointer">Listára</button>
-</div>
-</article>
-
-<article class="bb-card" style="background: #1C1C1F; border: 1px solid #2A2A2E; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #FF6B6F">Felújított</span>
-<span style="font-size: 12px; color: #8E8E96">14&quot; · 1366×768</span>
-</div>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.01em">Dell Latitude 5400</h3>
-<div style="display: flex; flex-wrap: wrap; gap: 6px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">i5-8265U</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">16 GB</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">256 GB SSD</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">Win 10 Pro</span>
-</div>
-<div style="margin-top: auto; padding-top: 14px; border-top: 1px solid #2A2A2E; display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em">99.000 Ft</span>
-<button type="button" style="height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: #D7141A; color: #FFFFFF; font: 700 14px Inter, sans-serif; cursor: pointer">Listára</button>
-</div>
-</article>
-
-<article class="bb-card" style="background: #1C1C1F; border: 1px solid #2A2A2E; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #FF6B6F">Felújított</span>
-<span style="font-size: 12px; color: #8E8E96">14&quot; · 1920×1080</span>
-</div>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.01em">HP ProBook 640 G8</h3>
-<div style="display: flex; flex-wrap: wrap; gap: 6px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">i3-1115G4</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">8 GB</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">256 GB SSD</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">Win 11 Pro</span>
-</div>
-<div style="margin-top: auto; padding-top: 14px; border-top: 1px solid #2A2A2E; display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em">105.000 Ft</span>
-<button type="button" style="height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: #D7141A; color: #FFFFFF; font: 700 14px Inter, sans-serif; cursor: pointer">Listára</button>
-</div>
-</article>
-
-<article class="bb-card" style="background: #1C1C1F; border: 1px solid #2A2A2E; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #FF6B6F">Felújított</span>
-<span style="font-size: 12px; color: #8E8E96">14&quot; · 1920×1080</span>
-</div>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.01em">Dell Latitude 5410</h3>
-<div style="display: flex; flex-wrap: wrap; gap: 6px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">i5-10210U</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">8 GB</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">256 GB SSD</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">Win 11 Pro</span>
-</div>
-<div style="margin-top: auto; padding-top: 14px; border-top: 1px solid #2A2A2E; display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em">105.000 Ft</span>
-<button type="button" style="height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: #D7141A; color: #FFFFFF; font: 700 14px Inter, sans-serif; cursor: pointer">Listára</button>
-</div>
-</article>
-
-<article class="bb-card" style="background: #1C1C1F; border: 1px solid #2A2A2E; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #FF6B6F">Felújított</span>
-<span style="font-size: 12px; color: #8E8E96">15,6&quot; · 1920×1080</span>
-</div>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.01em">HP ProBook 455 G7</h3>
-<div style="display: flex; flex-wrap: wrap; gap: 6px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">Ryzen 5 4560</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">8 GB</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">256 GB SSD</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">Win 11 Pro</span>
-</div>
-<div style="margin-top: auto; padding-top: 14px; border-top: 1px solid #2A2A2E; display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em">115.000 Ft</span>
-<button type="button" style="height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: #D7141A; color: #FFFFFF; font: 700 14px Inter, sans-serif; cursor: pointer">Listára</button>
-</div>
-</article>
-
-<article class="bb-card" style="background: #1C1C1F; border: 1px solid #2A2A2E; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #FF6B6F">Felújított</span>
-<span style="font-size: 12px; color: #8E8E96">15,6&quot; · FHD érintő</span>
-</div>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.01em">Dell Latitude 5520</h3>
-<div style="display: flex; flex-wrap: wrap; gap: 6px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">i5-1135G7</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">16 GB</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">512 GB SSD</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">Win 11 Pro</span>
-</div>
-<div style="margin-top: auto; padding-top: 14px; border-top: 1px solid #2A2A2E; display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em">160.000 Ft</span>
-<button type="button" style="height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: #D7141A; color: #FFFFFF; font: 700 14px Inter, sans-serif; cursor: pointer">Listára</button>
-</div>
-</article>
-
-<article class="bb-card" style="background: #1C1C1F; border: 1px solid #2A2A2E; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #7DD3A8">Új</span>
-<span style="font-size: 12px; color: #8E8E96">15,6&quot; · 1920×1080</span>
-</div>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.01em">Lenovo V15 G4 AMN</h3>
-<div style="display: flex; flex-wrap: wrap; gap: 6px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">Ryzen 3 7320U</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">8 GB</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">256 GB NVMe</span>
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #2A2A2E; color: #E4E4E7">Win 11 Pro</span>
-</div>
-<div style="margin-top: auto; padding-top: 14px; border-top: 1px solid #2A2A2E; display: flex; justify-content: space-between; align-items: center">
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.02em">179.900 Ft</span>
-<button type="button" style="height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: #D7141A; color: #FFFFFF; font: 700 14px Inter, sans-serif; cursor: pointer">Listára</button>
-</div>
-</article>
-
-</div>
-<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; background: #1C1C1F; border: 1px solid #2A2A2E; border-radius: 20px; padding: 22px 26px">
-<div style="display: flex; align-items: center; gap: 16px">
-<svg aria-hidden="true" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FF4D52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M8 21h8M12 17v4"></path><path d="m9 10 2 2 4-4"></path></svg>
-<div><div style="font-weight: 700; font-size: 17px">Windows 10/11 Professional digitális licensz</div><div style="font-size: 14px; color: #A1A1AA">Bármely géphez, azonnal aktiválható</div></div>
-</div>
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 30px; font-weight: 900">14.000 Ft</span>
-</div>
-</div>
+<section id="notebook" class="nb">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:36px">
+    <div class="sechead">
+      <div style="display:flex;flex-direction:column;gap:10px;max-width:640px">
+        <span class="mono" style="align-self:flex-start;background:var(--red);font-size:13px;font-weight:700;letter-spacing:.12em;padding:6px 12px;border-radius:6px">NOTEBOOK AKCIÓ!</span>
+        <h2 class="h2" style="font-size:clamp(34px,5vw,52px);line-height:1">Felújított üzleti notebookok, <span style="color:#FF4D52">azonnal elvihetők.</span></h2>
+        <p style="margin:0;font-size:17px;color:#B4B4BB;line-height:1.55">Dell, HP, Fujitsu és Lenovo gépek SSD-vel, Windows Professional rendszerrel, garanciával.</p>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(270px,1fr))" id="notebooks"></div>
+    <div id="extraSale" style="display:flex;flex-direction:column;gap:12px"></div>
+  </div>
 </section>
 
-<!-- Categories -->
-<section id="kategoriak" style="max-width: 1280px; margin: 0 auto; padding: 80px clamp(16px, 4vw, 40px); display: flex; flex-direction: column; gap: 32px">
-<div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end">
-<div style="display: flex; flex-direction: column; gap: 8px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D7141A; font-weight: 700; letter-spacing: .12em; text-transform: uppercase">Termékkategóriák</span>
-<h2 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 44px; font-weight: 900; letter-spacing: -0.03em">Minden, ami gép</h2>
-</div>
-<form role="search" style="display: flex; align-items: center; gap: 10px; height: 54px; padding: 0 8px 0 20px; border: 2px solid #111111; border-radius: 999px; flex: 0 1 420px; min-width: 260px; box-sizing: border-box">
-<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
-<label for="bb-search" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Keresés a termékek között</label>
-<input id="bb-search" type="search" placeholder="Keresés: SSD, egér, Ryzen…" style="flex: 1; min-width: 0; border: 0; outline: none; font: 500 15px Inter, sans-serif; background: transparent; color: #111111">
-<button type="submit" style="height: 40px; padding: 0 18px; border: 0; border-radius: 999px; background: #D7141A; color: #FFFFFF; font: 700 14px Inter, sans-serif; cursor: pointer">Keresés</button>
-</form>
-</div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px">
-
-<div style="border: 1px solid #ECECEC; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
-<div style="display: flex; align-items: center; gap: 12px">
-<span style="width: 40px; height: 40px; border-radius: 12px; background: #FDECEC; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D7141A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h12v12H6zM9 9h6v6H9zM9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"></path></svg>
-</span>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 19px; font-weight: 800">Alkatrészek</h3>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 8px">
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Alaplap</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Processzor</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Memória</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Videókártya</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Tápegység</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Ház</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Hűtőventilátorok</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Vezérlőkártyák</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">DVD író</a>
-
-</div>
-</div>
-
-<div style="border: 1px solid #ECECEC; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
-<div style="display: flex; align-items: center; gap: 12px">
-<span style="width: 40px; height: 40px; border-radius: 12px; background: #FDECEC; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D7141A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM8 7h8M8 11h8M9 17h.01M15 17h.01"></path></svg>
-</span>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 19px; font-weight: 800">Adattárolás</h3>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 8px">
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">SSD</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Winchester</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Külső USB-s winchester</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Pen Drive</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Memóriakártya, kártyaolvasó</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">CD és DVD lemezek</a>
-
-</div>
-</div>
-
-<div style="border: 1px solid #ECECEC; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
-<div style="display: flex; align-items: center; gap: 12px">
-<span style="width: 40px; height: 40px; border-radius: 12px; background: #FDECEC; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D7141A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 1 6 6v6a6 6 0 0 1-12 0V9a6 6 0 0 1 6-6zM12 7v4"></path></svg>
-</span>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 19px; font-weight: 800">Perifériák</h3>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 8px">
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Monitor</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Billentyűzet</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Egér, vezetékes</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Egér, vezeték nélküli</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Egérpad</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Webkamera</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Játékvezérlők</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Hangszóró, fejhallgató</a>
-
-</div>
-</div>
-
-<div style="border: 1px solid #ECECEC; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
-<div style="display: flex; align-items: center; gap: 12px">
-<span style="width: 40px; height: 40px; border-radius: 12px; background: #FDECEC; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D7141A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a15 15 0 0 1 20 0M12 20h.01"></path></svg>
-</span>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 19px; font-weight: 800">Hálózat</h3>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 8px">
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">WiFi router</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">WiFi Access Point</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">WiFi Range Extender</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">WiFi vevő</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Switch</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Hálózati kártya, kábel</a>
-
-</div>
-</div>
-
-<div style="border: 1px solid #ECECEC; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
-<div style="display: flex; align-items: center; gap: 12px">
-<span style="width: 40px; height: 40px; border-radius: 12px; background: #FDECEC; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D7141A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M7 14h10v7H7z"></path></svg>
-</span>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 19px; font-weight: 800">Nyomtatás</h3>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 8px">
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Nyomtató, multifunkciós</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Szkenner</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Tintapatron HP</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Tintapatron Canon</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Tintapatron Epson</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Toner HP</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Toner Kyocera</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Töltőkészlet</a>
-
-</div>
-</div>
-
-<div style="border: 1px solid #ECECEC; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
-<div style="display: flex; align-items: center; gap: 12px">
-<span style="width: 40px; height: 40px; border-radius: 12px; background: #FDECEC; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D7141A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H4zM2 19h20"></path></svg>
-</span>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 19px; font-weight: 800">Notebook &amp; használt gép</h3>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 8px">
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Notebookok, azonnal elvihetők</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Használt notebook</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Használt számítógép</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Notebook táskák</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Notebookhűtők</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Notebook adapterek</a>
-
-</div>
-</div>
-
-<div style="border: 1px solid #ECECEC; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
-<div style="display: flex; align-items: center; gap: 12px">
-<span style="width: 40px; height: 40px; border-radius: 12px; background: #FDECEC; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D7141A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v5M17 3v5M5 8h4v4a2 2 0 0 1-4 0zM15 8h4v4a2 2 0 0 1-4 0zM7 14v3a4 4 0 0 0 4 4h2a4 4 0 0 0 4-4v-3"></path></svg>
-</span>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 19px; font-weight: 800">Kábelek &amp; adapterek</h3>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 8px">
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">HDMI</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">DisplayPort</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">USB</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">UTP</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">SATA</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">VGA</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">DVI</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">HDMI / VGA / DP adapterek</a>
-
-</div>
-</div>
-
-<div style="border: 1px solid #ECECEC; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
-<div style="display: flex; align-items: center; gap: 12px">
-<span style="width: 40px; height: 40px; border-radius: 12px; background: #FDECEC; display: inline-flex; align-items: center; justify-content: center">
-<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D7141A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"></path></svg>
-</span>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 19px; font-weight: 800">Energia &amp; egyéb</h3>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 8px">
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Szünetmentes táp (UPS)</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Power bank</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Elemek, akkumulátorok</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Szoftver</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">USB eszközök</a>
-
-<a class="bb-chip" href="#kategoria" style="font-size: 13px; font-weight: 500; padding: 7px 12px; border: 1px solid #E4E4E7; border-radius: 999px; color: #27272A">Tisztító eszközök</a>
-
-</div>
-</div>
-
-</div>
-<a href="#uzenet" style="align-self: center; display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; padding: 14px 24px; border-radius: 999px; background: #F6F6F7">Nem találja a keresett terméket? <span style="color: #D7141A">Írjon nekünk →</span></a>
+<section id="kategoriak" class="wrap" style="padding-block:80px;display:flex;flex-direction:column;gap:32px">
+  <div class="sechead">
+    <div style="display:flex;flex-direction:column;gap:8px"><span class="eyebrow">Termékkategóriák</span><h2 class="h2">Minden, ami gép</h2></div>
+    <form role="search" class="search" id="searchForm">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <label for="q" class="sr">Keresés a termékek között</label>
+      <input id="q" type="search" placeholder="Keresés: SSD, egér, Ryzen…" autocomplete="off">
+      <button type="submit">Keresés</button>
+    </form>
+  </div>
+  <div id="results" class="results" hidden></div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))" id="groups"></div>
+  <a href="mailto:info@bitbolt.hu" data-mail style="align-self:center;display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:16px;padding:14px 24px;border-radius:999px;background:var(--bg);text-align:center">Nem találja a keresett terméket? <span style="color:var(--red)">Írjon nekünk →</span></a>
 </section>
 
-<!-- More offers -->
-<section style="max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px) 80px; display: flex; flex-direction: column; gap: 24px">
-<h2 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 32px; font-weight: 900; letter-spacing: -0.02em">További ajánlatok</h2>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0 32px; border-top: 2px solid #111111">
-
-<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid #ECECEC">
-<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D7141A; font-weight: 700; text-transform: uppercase; letter-spacing: .06em">Pen Drive · 5 év</span>
-<span style="font-size: 15px; font-weight: 600">Kingston DTXG2 128 GB USB 3.2</span>
-</div>
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 20px; font-weight: 800; white-space: nowrap">7.600 Ft</span>
-</div>
-
-<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid #ECECEC">
-<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D7141A; font-weight: 700; text-transform: uppercase; letter-spacing: .06em">Memóriakártya · 5 év</span>
-<span style="font-size: 15px; font-weight: 600">Kingston microSDXC 128 GB Cl10</span>
-</div>
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 20px; font-weight: 800; white-space: nowrap">16.500 Ft</span>
-</div>
-
-<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid #ECECEC">
-<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D7141A; font-weight: 700; text-transform: uppercase; letter-spacing: .06em">USB eszköz · 1 év</span>
-<span style="font-size: 15px; font-weight: 600">Gembird 2,5&quot; külső HDD ház, USB 3.0</span>
-</div>
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 20px; font-weight: 800; white-space: nowrap">4.000 Ft</span>
-</div>
-
-<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid #ECECEC">
-<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D7141A; font-weight: 700; text-transform: uppercase; letter-spacing: .06em">Egér · 1 év</span>
-<span style="font-size: 15px; font-weight: 600">Meetion M371 USB gaming, világítós</span>
-</div>
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 20px; font-weight: 800; white-space: nowrap">2.500 Ft</span>
-</div>
-
-<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid #ECECEC">
-<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D7141A; font-weight: 700; text-transform: uppercase; letter-spacing: .06em">WiFi vevő · 2 év</span>
-<span style="font-size: 15px; font-weight: 600">Mercusys MW300UH USB adapter 300M</span>
-</div>
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 20px; font-weight: 800; white-space: nowrap">4.800 Ft</span>
-</div>
-
-<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid #ECECEC">
-<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D7141A; font-weight: 700; text-transform: uppercase; letter-spacing: .06em">Egér · 1 év</span>
-<span style="font-size: 15px; font-weight: 600">Gembird MUSG-07 RGB gaming</span>
-</div>
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 20px; font-weight: 800; white-space: nowrap">3.500 Ft</span>
-</div>
-
-<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid #ECECEC">
-<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D7141A; font-weight: 700; text-transform: uppercase; letter-spacing: .06em">Billentyűzet · 1 év</span>
-<span style="font-size: 15px; font-weight: 600">Genius Scorpion K220, magyar, háttérvilágítás</span>
-</div>
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 20px; font-weight: 800; white-space: nowrap">6.000 Ft</span>
-</div>
-
-<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid #ECECEC">
-<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D7141A; font-weight: 700; text-transform: uppercase; letter-spacing: .06em">Processzor · 3 év</span>
-<span style="font-size: 15px; font-weight: 600">Intel Core i5-14400F BOX</span>
-</div>
-<span style="font-family: Archivo, Inter, sans-serif; font-size: 20px; font-weight: 800; white-space: nowrap">72.000 Ft</span>
-</div>
-
-</div>
+<section class="wrap" style="padding-bottom:80px;display:flex;flex-direction:column;gap:24px" id="moreSec">
+  <h2 class="h2" style="font-size:32px">További ajánlatok</h2>
+  <div class="morelist" id="more"></div>
 </section>
 
-<!-- Data erase notice -->
-<section style="max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px) 80px">
-<div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: center; border: 2px solid #111111; border-radius: 24px; padding: 28px 32px">
-<div style="position: relative; width: 120px; height: 118px; flex: 0 0 auto; border: 2px dashed #D7141A; border-radius: 12px; display: flex; align-items: center; justify-content: center; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #D7141A; line-height: 1.3"><img src="assets/veglegestorles.png" alt="nmhh.hu/veglegestorles" onerror="this.remove()" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #FFFFFF; border-radius: 8px">[ NMHH LOGÓ ]<br>veglegestorles.png</div>
-<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 8px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D7141A; font-weight: 700; letter-spacing: .1em">TISZTELT VÁSÁRLÓNK!</span>
-<h3 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 24px; font-weight: 800">Fizetésnél kérje az ingyenes adattörlő kódot!</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.55; color: #52525B">A Kormány döntése alapján a kereskedő minden tartós adathordozó termék vásárlásakor köteles ingyenes adattörlő kódot biztosítani. További információk: <a href="https://nmhh.hu/veglegestorles" style="color: #B30F14; font-weight: 600; text-decoration: underline">nmhh.hu/veglegestorles</a></p>
-</div>
-</div>
+<section class="wrap" style="padding-bottom:80px" id="notice">
+  <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:center;border:2px solid var(--ink);border-radius:24px;padding:28px 32px">
+    <div class="slot" style="width:120px;height:118px;flex:0 0 auto;color:var(--red)">[ NMHH LOGÓ ]<br>veglegestorles.png<img src="assets/veglegestorles.png" alt="nmhh.hu/veglegestorles" onerror="this.remove()"></div>
+    <div style="flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:8px">
+      <span class="eyebrow" style="letter-spacing:.1em">Tisztelt vásárlónk!</span>
+      <h3 style="margin:0;font-family:var(--display);font-size:24px;font-weight:800">Fizetésnél kérje az ingyenes adattörlő kódot!</h3>
+      <p style="margin:0;font-size:15px;line-height:1.55;color:var(--muted)">A Kormány döntése alapján a kereskedő minden tartós adathordozó termék vásárlásakor köteles ingyenes adattörlő kódot biztosítani. További információk: <a href="https://nmhh.hu/veglegestorles" style="color:var(--red-d);font-weight:600;text-decoration:underline">nmhh.hu/veglegestorles</a></p>
+    </div>
+  </div>
 </section>
+</main>
 
-<!-- Footer -->
-<footer id="kapcsolat" style="background: #D7141A; color: #FFFFFF; position: relative; overflow: hidden">
-<div class="bb-dots-w" aria-hidden="true" style="position: absolute; inset: 0"></div>
-<div style="position: relative; max-width: 1280px; margin: 0 auto; padding: 72px clamp(16px, 4vw, 40px) 32px; display: flex; flex-direction: column; gap: 48px">
-<div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between">
-<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
-<h2 style="margin: 0; font-family: Archivo, Inter, sans-serif; font-size: 56px; font-weight: 900; letter-spacing: -0.035em; line-height: .98">Várjuk<br>az üzletben.</h2>
-<p style="margin: 0; font-size: 17px; line-height: 1.55; max-width: 440px; opacity: .92">Kereskedelem, gyorsszerviz, vírusirtás és adatmentés – Győrben, a Móricz Zsigmond rakparton.</p>
-</div>
-<div style="flex: 1 1 520px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px">
-<div style="background: #FFFFFF; color: #111111; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 8px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #D7141A; font-weight: 700; letter-spacing: .08em">CÍM</span>
-<span style="font-size: 17px; font-weight: 700">9022 Győr,<br>Móricz Zsigmond rakpart 22</span>
-</div>
-<div style="background: #FFFFFF; color: #111111; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 8px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #D7141A; font-weight: 700; letter-spacing: .08em">NYITVA TARTÁS</span>
-<span style="font-size: 17px; font-weight: 700">Hétköznap 9–18<br>Szombat 9–13</span>
-</div>
-<div style="background: #FFFFFF; color: #111111; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 8px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #D7141A; font-weight: 700; letter-spacing: .08em">TELEFON / FAX</span>
-<a href="tel:0696316538" style="font-size: 17px; font-weight: 700; color: #111111">96/316-538</a>
-<span style="font-size: 14px; color: #52525B">Fax: 96/335-318</span>
-</div>
-<div style="background: #FFFFFF; color: #111111; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 8px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #D7141A; font-weight: 700; letter-spacing: .08em">E-MAIL</span>
-<a href="mailto:info@bitbolt.hu" style="font-size: 17px; font-weight: 700; color: #111111">info@bitbolt.hu</a>
-</div>
-</div>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.35)">
-<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
-<a href="https://www.facebook.com/bitboltgyor/" style="position: relative; display: inline-flex; align-items: center; justify-content: center; width: 103px; height: 32px; border: 2px dashed #FFFFFF; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #FFFFFF"><img src="assets/service_fb.gif" alt="Facebook" onerror="this.remove()" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #FFFFFF; border-radius: 8px">[ FACEBOOK ]</a>
-<div style="position: relative; display: flex; align-items: center; justify-content: center; width: 150px; height: 32px; border: 2px dashed #FFFFFF; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700"><img src="assets/bankcards.png" alt="Elfogadott bankkártyák" onerror="this.remove()" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #FFFFFF; border-radius: 8px">[ BANKKÁRTYÁK ]</div>
-</div>
-<nav aria-label="Lábléc menü" style="display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 14px; font-weight: 600">
-<a href="#rolunk" style="color: #FFFFFF">Magunkról</a>
-<a href="#referenciak" style="color: #FFFFFF">Referenciák</a>
-<a href="#arlista" style="color: #FFFFFF">Árlista</a>
-<a href="#aruhitel" style="color: #FFFFFF">Áruhitel</a>
-<a href="#webaruhaz" style="color: #FFFFFF">Webáruház</a>
-<a href="admin.html" style="color: #FFFFFF; opacity: .75">Admin</a>
-</nav>
-<span style="font-size: 13px; opacity: .85">© 2026 bitbolt.hu</span>
-</div>
-</div>
+<footer id="kapcsolat">
+  <div class="dots-w" aria-hidden="true" style="position:absolute;inset:0"></div>
+  <div class="wrap" style="position:relative;padding-block:72px 32px;display:flex;flex-direction:column;gap:48px">
+    <div style="display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between">
+      <div style="flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:18px">
+        <h2 style="margin:0;font-family:var(--display);font-size:clamp(40px,5vw,56px);font-weight:900;letter-spacing:-.035em;line-height:.98">Várjuk<br>az üzletben.</h2>
+        <p style="margin:0;font-size:17px;line-height:1.55;max-width:440px;opacity:.92">Kereskedelem, gyorsszerviz, vírusirtás és adatmentés – Győrben, a Móricz Zsigmond rakparton.</p>
+      </div>
+      <div style="flex:1 1 520px;min-width:0;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))" class="grid" id="fgrid">
+        <div class="fcard"><span class="eyebrow mono">Cím</span><b data-f="addr"></b></div>
+        <div class="fcard"><span class="eyebrow mono">Nyitva tartás</span><b>Hétköznap <span data-f="week"></span><br>Szombat <span data-f="sat"></span></b></div>
+        <div class="fcard"><span class="eyebrow mono">Telefon / Fax</span><a data-tel><b data-f="tel"></b></a><span style="font-size:14px;color:var(--muted)">Fax: <span data-f="fax"></span></span></div>
+        <div class="fcard"><span class="eyebrow mono">E-mail</span><a data-mail><b data-f="email"></b></a></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid rgba(255,255,255,.35)">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+        <a href="https://www.facebook.com/bitboltgyor/" class="slot" style="width:103px;height:32px;color:#fff;border-radius:8px;font-size:10px">[ FACEBOOK ]<img src="assets/service_fb.gif" alt="Facebook" onerror="this.remove()"></a>
+        <div class="slot" style="width:150px;height:32px;color:#fff;border-radius:8px;font-size:10px">[ BANKKÁRTYÁK ]<img src="assets/bankcards.png" alt="Elfogadott bankkártyák" onerror="this.remove()"></div>
+      </div>
+      <nav aria-label="Lábléc menü" style="display:flex;flex-wrap:wrap;gap:6px 22px;font-size:14px;font-weight:600">
+        <a href="#rolunk">Magunkról</a><a href="#kategoriak">Termékek</a><a href="#notebook">Notebook akció</a><a href="admin.html" style="opacity:.8">Admin</a>
+      </nav>
+      <span style="font-size:13px;opacity:.85">© 2026 bitbolt.hu · koncepcióterv</span>
+    </div>
+  </div>
 </footer>
 
-</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  var E = BB.esc, ft = BB.ft;
+  function ic(n, s, stroke, w){ return '<svg aria-hidden="true" width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="'+stroke+'" stroke-width="'+w+'" stroke-linecap="round" stroke-linejoin="round"><path d="'+BB.icons[n]+'"/></svg>'; }
+  var plus = '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+  var $ = function(id){ return document.getElementById(id); };
+
+  var SERVICES = [
+    ['01','Kereskedelem','cart','Alkatrészek, perifériák, notebookok és szoftverek – raktárról, szakértő tanácsadással.'],
+    ['02','Gyorsszerviz','wrench','Hibafeltárás, javítás és bővítés helyben, gyors átfutással.'],
+    ['03','Vírusirtás','shield','Kártevők eltávolítása, rendszer megtisztítása és védelem beállítása.'],
+    ['04','Adatmentés','db','Sérült vagy hibás adathordozók adatainak visszaállítása.']
+  ];
+
+  function card(p){
+    return '<article class="pcard card-hover"><div class="img dots">'+ic(BB.catIcon(p.cat),64,'#111',1.4)+
+      (p.img?'<img src="'+E(p.img)+'" alt="">':'')+
+      '<span class="cat">'+E(p.cat)+'</span><span class="gar">Garancia '+E(p.gar)+'</span>'+(p.sale?'<span class="sale">AKCIÓ</span>':'')+
+      '</div><div class="body"><h3>'+E(p.name)+'</h3>'+(p.spec?'<p>'+E(p.spec)+'</p>':'')+
+      '<div class="foot"><span class="price">'+ft(p.price)+'</span><button type="button" class="addbtn" data-add="'+p.id+'" aria-label="Listára: '+E(p.name)+'">'+plus+'</button></div></div></article>';
+  }
+
+  function render(){
+    var D = BB.data, s = D.shop, vis = D.products.filter(function(p){ return p.visible; });
+
+    // shop data everywhere
+    document.querySelectorAll('[data-f]').forEach(function(el){ el.textContent = s[el.dataset.f] || ''; });
+    document.querySelectorAll('[data-tel]').forEach(function(el){ el.href = 'tel:06' + String(s.tel).replace(/\D/g,''); });
+    document.querySelectorAll('[data-mail]').forEach(function(el){ el.href = 'mailto:' + s.email; });
+    $('ann').hidden = !s.msg; $('ann').textContent = s.msg || '';
+    $('notice').hidden = !s.notice;
+    $('listCount').textContent = D.list || 0;
+
+    // hero
+    var h = D.products.find(function(p){ return p.id === D.heroId && p.visible; }) || vis[0];
+    $('heroPanel').innerHTML = !h ? '' :
+      '<div class="layer dots-w" aria-hidden="true"></div>'+
+      '<svg class="layer" aria-hidden="true" width="340" height="340" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.16)" stroke-width=".6" style="inset:auto -70px -60px auto"><path d="'+BB.icons.cpu+'"/></svg>'+
+      '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><span class="mono" style="font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase">'+E(D.heroLabel)+'</span><span style="background:#fff;color:#111;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:700">Garancia: '+E(h.gar)+'</span></div>'+
+      (h.img?'<img class="pimg" src="'+E(h.img)+'" alt="">':'')+
+      '<div style="display:flex;flex-direction:column;gap:10px"><span style="font-size:14px;font-weight:600;opacity:.85">'+E(h.cat)+'</span><h2>'+E(h.name)+'</h2>'+(h.spec?'<span class="mono" style="font-size:13px;opacity:.85">'+E(h.spec)+'</span>':'')+'</div>'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap"><div class="big">'+ft(h.price).replace(' Ft','')+'<span style="font-size:24px;font-weight:700"> Ft</span></div>'+
+      '<button type="button" data-add="'+h.id+'" style="min-height:52px;padding:0 24px;border:0;border-radius:999px;background:#111;color:#fff;font-weight:700;font-size:15px">Listára +</button></div>';
+
+    // services
+    $('services').innerHTML = SERVICES.map(function(x){
+      return '<div class="svc card-hover"><div style="display:flex;justify-content:space-between;align-items:center"><span class="ibox">'+ic(x[2],22,'#fff',2)+'</span><span class="mono" style="font-size:13px;color:var(--red);font-weight:700">'+x[0]+'</span></div><h3>'+x[1]+'</h3><p>'+x[3]+'</p></div>';
+    }).join('');
+
+    // featured
+    var feat = vis.filter(function(p){ return p.featured; });
+    $('ajanlatok').hidden = !feat.length;
+    $('featured').innerHTML = feat.map(card).join('');
+
+    // notebooks + other sale items
+    var nbs = vis.filter(function(p){ return p.sale && p.cat === 'Notebook'; });
+    var other = vis.filter(function(p){ return p.sale && p.cat !== 'Notebook'; });
+    $('notebook').hidden = !s.sale || (!nbs.length && !other.length);
+    $('notebooks').innerHTML = nbs.map(function(n){
+      var parts = n.spec.split('·').map(function(x){ return x.trim(); }).filter(Boolean);
+      var screen = parts.length > 4 ? parts.shift() : '';
+      var col = n.state === 'Új' ? '#7DD3A8' : '#FF6B6F';
+      return '<article class="nbcard card-hover">'+(n.img?'<img src="'+E(n.img)+'" alt="">':'')+
+        '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="mono" style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:'+col+'">'+E(n.state)+'</span><span style="font-size:12px;color:#8E8E96">'+E(screen)+'</span></div>'+
+        '<h3>'+E(n.name)+'</h3><div class="chips">'+parts.map(function(c){ return '<span>'+E(c)+'</span>'; }).join('')+'</div>'+
+        '<div class="foot"><span class="price">'+ft(n.price)+'</span><button type="button" class="listbtn" data-add="'+n.id+'">Listára</button></div></article>';
+    }).join('');
+    $('extraSale').innerHTML = other.map(function(o){
+      return '<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;background:#1C1C1F;border:1px solid #2A2A2E;border-radius:20px;padding:22px 26px">'+
+        '<div style="display:flex;align-items:center;gap:16px">'+ic(BB.catIcon(o.cat),34,'#FF4D52',1.8)+'<div><div style="font-weight:700;font-size:17px">'+E(o.name)+'</div><div style="font-size:14px;color:#A1A1AA">'+E(o.spec||o.cat)+'</div></div></div>'+
+        '<div style="display:flex;align-items:center;gap:16px"><span class="price" style="font-size:30px">'+ft(o.price)+'</span><button type="button" class="listbtn" data-add="'+o.id+'">Listára</button></div></div>';
+    }).join('');
+
+    // groups
+    $('groups').innerHTML = D.groups.map(function(g){
+      return '<div class="group"><div style="display:flex;align-items:center;gap:12px"><span style="width:40px;height:40px;border-radius:12px;background:var(--red-l);display:inline-flex;align-items:center;justify-content:center">'+ic(g.icon||'box',20,'#D7141A',2)+'</span><h3>'+E(g.title)+'</h3></div>'+
+        '<div style="display:flex;flex-wrap:wrap;gap:8px">'+g.items.map(function(c){ return '<button type="button" class="chip" data-chip="'+E(c)+'" aria-pressed="false">'+E(c)+'</button>'; }).join('')+'</div></div>';
+    }).join('');
+
+    // more
+    var more = vis.filter(function(p){ return !p.featured && !p.sale; });
+    $('moreSec').hidden = !more.length;
+    $('more').innerHTML = more.map(function(m){
+      return '<div><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span class="mono" style="font-size:11px;color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.06em">'+E(m.cat)+' · '+E(m.gar)+'</span><span style="font-size:15px;font-weight:600">'+E(m.name)+'</span></div>'+
+        '<span style="display:flex;align-items:center;gap:12px"><span style="font-family:var(--display);font-size:20px;font-weight:800;white-space:nowrap">'+ft(m.price)+'</span><button type="button" class="addbtn" style="width:36px;height:36px" data-add="'+m.id+'" aria-label="Listára: '+E(m.name)+'">'+plus+'</button></span></div>';
+    }).join('');
+
+    if (lastQuery) search(lastQuery, lastChip);
+  }
+
+  // search
+  var lastQuery = '', lastChip = false;
+  function norm(t){ return String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+  function search(q, isChip){
+    lastQuery = q; lastChip = isChip;
+    var box = $('results');
+    if (!q) { box.hidden = true; return; }
+    var n = norm(q), vis = BB.data.products.filter(function(p){ return p.visible; });
+    var hits = vis.filter(function(p){
+      if (isChip) { var c = norm(p.cat), k = norm(q); return k.indexOf(c) > -1 || c.indexOf(k.split(',')[0].trim()) > -1; }
+      return norm(p.name + ' ' + p.cat + ' ' + p.spec).indexOf(n) > -1;
+    });
+    box.hidden = false;
+    box.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><h3 style="margin:0;font-family:var(--display);font-size:22px;font-weight:800">'+(isChip?'Kategória: ':'Találatok: ')+'„'+E(q)+'” <span style="color:var(--muted2);font-weight:600;font-size:16px">('+hits.length+')</span></h3>'+
+      '<button type="button" id="clearRes" class="chip">Bezárás ✕</button></div>'+
+      (hits.length ? '<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px">'+hits.map(card).join('')+'</div>'
+        : '<p style="margin:0;color:var(--muted)">Ebben a bemutatóban nincs ilyen termék. Az admin felületen bármikor felvihető.</p>');
+    document.querySelectorAll('.chip[data-chip]').forEach(function(c){ c.setAttribute('aria-pressed', String(isChip && c.dataset.chip === q)); });
+  }
+  $('searchForm').addEventListener('submit', function(e){ e.preventDefault(); search($('q').value.trim(), false); });
+  $('q').addEventListener('input', function(e){ if (!e.target.value) search('', false); });
+
+  // toast
+  function toast(m){ var t=$('toast'); t.textContent=m; t.classList.add('on'); clearTimeout(t._h); t._h=setTimeout(function(){ t.classList.remove('on'); }, 2200); }
+
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('[data-add]');
+    if (a) { var p = BB.data.products.find(function(x){ return x.id === +a.dataset.add; }); BB.data.list = (BB.data.list||0)+1; BB.save(); $('listCount').textContent = BB.data.list; toast('Listára téve: ' + (p ? p.name : '')); return; }
+    var c = e.target.closest('[data-chip]');
+    if (c) { if (lastChip && lastQuery === c.dataset.chip) { search('', false); } else { search(c.dataset.chip, true); $('results').scrollIntoView({block:'nearest'}); } return; }
+    if (e.target.closest('#clearRes')) { $('q').value=''; search('', false); return; }
+    if (e.target.closest('#listBtn')) { e.preventDefault(); toast('A listán ' + (BB.data.list||0) + ' termék van (bemutató)'); }
+  });
+
+  // live update when the admin (another tab) saves
+  window.addEventListener('storage', function(e){ if (e.key === BB.KEY) { BB.reload(); render(); toast('Az oldal frissült az admin módosításai alapján'); } });
+  window.addEventListener('pageshow', function(){ BB.reload(); render(); });
+  render();
+})();
+</script>
 </body>
 </html>

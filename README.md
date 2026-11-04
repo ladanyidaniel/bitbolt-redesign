@@ -8,15 +8,23 @@ Modernizált látványterv a [bitbolt.hu](https://www.bitbolt.hu/) számításte
 
 | Fájl | Mi ez |
 |---|---|
-| `index.html` | Az új főoldal: nyitórész kiemelt ajánlattal, szolgáltatások, kiemelt termékek, notebook akció, csoportosított kategóriák kereséssel, adattörlő-kódos tájékoztató, elérhetőségek. Mobilon is működik. |
-| `admin.html` | A bolt tartalomkezelőjének (CMS) mockupja: belépés, vezérlőpult, terméklista (keresés, szűrés, kiemelés és láthatóság kapcsolóval), termékszerkesztő élő előnézettel, nyitóoldal és kiemelt ajánlatok sorrendje, kategóriák, árlista-feltöltés, bolt adatai és nyitvatartás. |
+| `index.html` | Az új főoldal: nyitórész kiemelt ajánlattal, szolgáltatások, kiemelt termékek, notebook akció, csoportosított kategóriák működő keresővel, adattörlő-kódos tájékoztató, elérhetőségek. Mobilon is működik. |
+| `admin.html` | A bolt tartalomkezelője (CMS): belépés, vezérlőpult, terméklista (keresés, szűrés, kiemelés és láthatóság kapcsolóval), termékszerkesztő képfeltöltéssel és élő előnézettel, a nyitóoldal fő ajánlata és a kiemeltek sorrendje, kategóriák, árlista, bolt adatai, nyitvatartás, rendkívüli közlemény. |
+| `data.js` | A közös adattár: a kezdő tartalom és a mentés. |
 | `assets/` | Ide kerülnek a bolt logói (lásd lent). |
 
-Az admin felület kattintható, de **semmit nem ment el**: az adatok a böngészőben, a memóriában élnek, frissítéskor visszaállnak.
+## Így működik a bemutató
+
+1. Nyisd meg az `admin.html`-t, és kattints a **Belépés** gombra (az adatok előre ki vannak töltve).
+2. Módosíts valamit: írd át egy termék árát, tölts fel képet, kapcsolj ki egy terméket, cseréld le a nyitóoldal fő ajánlatát, vagy írj be egy közleményt a *Bolt adatai* menüben.
+3. Nyisd meg mellette a weboldalt (*Weboldal megtekintése* gomb): a változás ott is megjelenik, ha nyitva van, akkor újratöltés nélkül is.
+
+A módosítások **csak abban a böngészőben** mentődnek, ahol végezték őket (localStorage). Más látogatók mindig az eredeti tartalmat látják, és egymás változtatásait sem látják. A *Vezérlőpult → Alaphelyzet* gomb visszaállítja az eredeti tartalmat. Egy éles rendszerben ugyanez egy szerveren futó adatbázisba menne.
 
 ## Megnyitás
 
-Elég duplán kattintani az `index.html` vagy az `admin.html` fájlra, nem kell hozzá szerver. Az admin belépésnél bármilyen adattal be lehet lépni.
+- **Helyben:** elég duplán kattintani az `index.html` vagy az `admin.html` fájlra, nem kell hozzá szerver.
+- **Online (GitHub Pages):** Settings → Pages → *Deploy from a branch* → `main` / `(root)` → Save. Pár perc múlva elérhető: `https://ladanyidaniel.github.io/bitbolt-redesign/` (admin: `.../admin.html`).
 
 ## Logók
 
